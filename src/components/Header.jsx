@@ -1,5 +1,5 @@
 import logoURL from 'img/NNLogoWhite.png'
-const Header = ({setShowForm}) => {
+const Header = ({showForm,setShowForm}) => {
   return (
     <>
     <header>
@@ -7,7 +7,7 @@ const Header = ({setShowForm}) => {
         <img src={logoURL} alt="site logo" />
       </div>
       <h1>Neighbourhood Needs</h1>
-      <button className="form-toggle" onPointerDown={() => setShowForm((show) => !show )}>Make an Entry!</button>
+      <button className="form-toggle" onPointerDown={() => setShowForm((show) => !show )}>{showForm? `Close`:`Make an Entry!`}</button>
     </header>
   </>
   )

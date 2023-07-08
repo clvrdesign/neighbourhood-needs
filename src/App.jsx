@@ -14,7 +14,7 @@ function App() {
  
   return (
     <Container>
-      <Header {...{setShowForm}}/>
+      <Header {...{showForm,setShowForm}}/>
       <ProblemForm {...{showForm}}/>
       <Main>
         <NeighbourhoodFilter {...{showFilter,setShowFilter}}/>
