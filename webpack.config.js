@@ -1,31 +1,21 @@
-const path = require('path');
+import path,{ resolve } from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = path.dirname(__filename);
 // const TerserPlugin = require('terser-webpack-plugin');
 
-module.exports = {
-  entry: ['./src/index.js'],
-  output: {
-    filename: 'main.min.js',
-    path: path.resolve(__dirname, 'UMD'),
+export const entry = ['./src/index.js'];
+export const output = {
+  filename: 'main.min.js',
+  path: resolve(__dirname, 'UMD'),
 
-    library: {
-      type: 'umd',
-    },
-    // prevent error: `Uncaught ReferenceError: self is not defined`
-    globalObject: 'this',
+  library: {
+    type: 'umd',
   },
-  mode: 'production',
-  // mode: 'development',
-  watch: true,
-  // devtool:'hidden-cheap-module-source-map'
-  // optimization: {
-  //   minimize: true,
-  //   minimizer: [
-  //     new TerserPlugin({
-  //       terserOptions: {
-  //         keep_classnames: true,
-  //         keep_fnames: true,
-  //       },
-  //     }),
-  //   ],
-  // },
+  // prevent error: `Uncaught ReferenceError: self is not defined`
+  globalObject: 'this',
 };
+export const mode = 'production';
+export const watch = true;
