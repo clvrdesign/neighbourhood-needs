@@ -5,8 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "webpack",
+    "build": "vite build",
+    "build:wp":"webpack",
     "lint": "eslint .",
+    "lint:vite": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "docs": "npx --yes documentation build src/** -f md > README[sample].md",
     "html": "npx --yes documentation build src/** -f html -o htmlDocs",
