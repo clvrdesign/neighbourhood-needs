@@ -15,6 +15,9 @@ export default defineConfig({
       ...namesOfPaths
     },
   },
+  server: {
+    port: 8080,
+  },
 })
 
 
