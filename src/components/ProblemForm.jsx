@@ -1,29 +1,94 @@
+import { useRef, useState,useEffect } from "react";
 import { sortedNeighbourhoods } from "/src/utils/extractNeighbourhoods.js";
 
-// (function createDataList() {
-//   const container = document.querySelector('.select-container');
-//   const dataList = document.createElement('datalist');
-//   dataList.id = 'neighbourhood-choice';
-
-//   neighbourhoodList.forEach(function(neighbourhood) {
-//     let neighbourhoodOption = document.createElement('option');
-//     neighbourhoodOption.value = neighbourhood.toUpperCase();
-//     dataList.appendChild(neighbourhoodOption);
-//   });
-
-//   container.appendChild(dataList);
-// })();
-function ProblemForm({showForm}) {
+function ProblemForm({ showForm }) {
+  const [message, setMessage] = useState("");
+  const [selected, setSelected] = useState("");
+  const [isValidated, setIsValidated] = useState(false);
+  const problemText = useRef(null);
+  const problemSelection = useRef(null);
 
   
+  function handleProblemText(event) {
+    const contents = event.target.value.trim();
+    const input = event.target;
+    setMessage(contents);
+
+    if (contents.trim().length === 0) {
+      setIsValidated(false);
+      return input.setCustomValidity("You must state your problem first.");
+    }
+
+    if (contents.trim().length < 10) {
+      setIsValidated(false);
+      return input.setCustomValidity(
+        `Please lengthen this text to 10 characters or more (you're currently using ${contents.length} characters).`
+      );
+    }
+
+    input.setCustomValidity("");
+  }
+
+  function handleSelect(event) {
+    const contents = event.target.value;
+    const selection = event.target;
+    setSelected(contents);
+
+    if (contents.length === 0) {
+      setIsValidated(false);
+      return selection.setCustomValidity("You must choose a location.");
+    }
+
+    selection.setCustomValidity("");
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    const inputValue = problemText.current.value;
+    const selectionValue = problemSelection.current.value;
+
+    if (inputValue.trim().length === 0) {
+      setIsValidated(false);
+       problemText.current.setCustomValidity("You must state your problem first.");
+       return problemText.current.reportValidity();
+    }
+
+    if (inputValue.trim().length < 10) {
+      setIsValidated(false);
+       problemText.current.setCustomValidity(
+        `Please lengthen this text to 10 characters or more (you're currently using ${inputValue.length} characters).`
+      );
+      return problemText.current.reportValidity();
+    }
+   
+    if (selectionValue.trim().length === 0) {
+      setIsValidated(false);
+       problemSelection.current.setCustomValidity("You must choose a location.");
+       return problemSelection.current.reportValidity();
+    }
+
+    problemSelection.current.setCustomValidity("");
+    problemSelection.current.setCustomValidity("");
+    setIsValidated(true);
+
+  
+
+  }
+
+
   return (
-    <form action="" className={`problem-form ${showForm|| 'problem-form--hidden'}`}>
+    <form
+      action=""
+      className={`problem-form ${showForm || "problem-form--hidden"}`}
+      onSubmit={handleSubmit}
+    >
       <input
         type="text"
         placeholder="Whats wrong in your Neighbourhood?"
         className="message"
-        required
-        maxLength="200"
+        value={message}
+        onChange={handleProblemText}
+        ref={problemText}
       />
       <span className="character-count">200</span>
       <input
@@ -32,19 +97,23 @@ function ProblemForm({showForm}) {
         placeholder="Evidence (link to photo/video)"
       />
       <div className="select-container">
-        <input
+        <select
           className="neighbourhood-select"
-          required
-          list="neighbourhood-choice"
-          placeholder="Where?"
-        />
-        <datalist id="neighbourhood-choice">
-          {sortedNeighbourhoods.map((aNeighbourhood, index) => (
-            <option key={index} value={aNeighbourhood} />
+          value={selected}
+          onChange={handleSelect}
+          ref={problemSelection}
+        >
+          <option value="">Where are you from?</option>
+          {sortedNeighbourhoods.map((aNeighbourhood) => (
+            <option key={aNeighbourhood} value={aNeighbourhood}>
+              {aNeighbourhood}
+            </option>
           ))}
-        </datalist>
+        </select>
       </div>
-      <button className="post-btn">Post</button>
+      <button type="submit" className="post-btn">
+        Post
+      </button>
     </form>
   );
 }
