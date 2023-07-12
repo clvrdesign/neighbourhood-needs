@@ -310,6 +310,14 @@ header h1 {
   background-color: #0f172a;
   scale: 0.95;
 }
+.post-btn[disabled]:hover {
+  background-color: #999;
+  scale: 1;
+}
+.post-btn[disabled]{
+  background-color: #999;
+  scale: 1;
+}
 .problem-form input::placeholder {
   color: #cbd5e1;
   font-weight: bold;
@@ -336,8 +344,7 @@ aside {
   border-top: 2px solid #64748b;
   padding-top: 1rem;
 }
-.neighbourhood-list li button,
-summary {
+.neighbourhood-list li button {
   padding: 1rem;
   font-size: var(--h6);
   background-color: #64748b;
@@ -350,7 +357,7 @@ summary {
 .neighbourhood-list li button:hover {
   scale: 0.95;
 }
-summary {
+/* summary {
   background-color: #64748b;
   text-transform: uppercase;
   font-weight: bold;
@@ -360,10 +367,11 @@ summary {
 
 details[open] summary {
   margin-bottom: 1.5rem;
-}
+} */
 .neighbourhood-list > * + * {
   margin-top: 1.5em;
 }
+
 
 select {
   -webkit-appearance: none;
@@ -378,6 +386,22 @@ select {
   padding: 1rem 2rem;
   flex: 1;
   cursor: pointer;
+  color: white;
+}
+
+select option[value=""] {
+  color: #cbd5e1;
+}
+option {
+  color: white;
+}
+
+option:first-child {
+  color: #cbd5e1;
+}
+
+*:focus-visible {
+  outline: 2px solid #f8fafc;
 }
 
 .problem-form--hidden {
@@ -506,9 +530,7 @@ footer > * + * {
     overflow-y: hidden;
     max-height: none;
   }
-  select:focus-visible {
-    outline: -webkit-focus-ring-color auto 1px;
-  }
+
   main {
     grid-template-columns: 280px 1fr;
     place-items: start;
