@@ -7,6 +7,7 @@ function ProblemForm({ showForm }) {
   const [isValidated, setIsValidated] = useState(false);
   const problemText = useRef(null);
   const problemSelection = useRef(null);
+  
 
   function handleProblemText(event) {
     const contents = event.target.value.trim();
@@ -46,6 +47,7 @@ function ProblemForm({ showForm }) {
     const inputValue = problemText.current.value;
     const selectionValue = problemSelection.current.value;
 
+
     const conditions = [
       {
         condition: inputValue.trim().length === 0,
@@ -60,6 +62,11 @@ function ProblemForm({ showForm }) {
       {
         condition: selectionValue.trim().length === 0,
         errorMessage: "You must choose a location.",
+        element: problemSelection.current,
+      },
+      {
+        condition: !sortedNeighbourhoods.includes(selectionValue.trim()),
+        errorMessage: "The location entered is not approved\n if you would like it added please send an email",
         element: problemSelection.current,
       },
     ];
