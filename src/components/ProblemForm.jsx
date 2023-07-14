@@ -1,4 +1,4 @@
-import { useRef, useState,useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { sortedNeighbourhoods } from "/src/utils/extractNeighbourhoods.js";
 
 function ProblemForm({ showForm }) {
@@ -8,7 +8,6 @@ function ProblemForm({ showForm }) {
   const problemText = useRef(null);
   const problemSelection = useRef(null);
 
-  
   function handleProblemText(event) {
     const contents = event.target.value.trim();
     const input = event.target;
@@ -47,34 +46,36 @@ function ProblemForm({ showForm }) {
     const inputValue = problemText.current.value;
     const selectionValue = problemSelection.current.value;
 
-    if (inputValue.trim().length === 0) {
-      setIsValidated(false);
-       problemText.current.setCustomValidity("You must state your problem first.");
-       return problemText.current.reportValidity();
+    const conditions = [
+      {
+        condition: inputValue.trim().length === 0,
+        errorMessage: "You must state your problem first.",
+        element: problemText.current,
+      },
+      {
+        condition: inputValue.trim().length < 10,
+        errorMessage: `Please lengthen this text to 10 characters or more (you're currently using ${inputValue.length} characters).`,
+        element: problemText.current,
+      },
+      {
+        condition: selectionValue.trim().length === 0,
+        errorMessage: "You must choose a location.",
+        element: problemSelection.current,
+      },
+    ];
+
+    for (const condition of conditions) {
+      if (condition.condition) {
+        setIsValidated(false);
+        condition.element.setCustomValidity(condition.errorMessage);
+        return condition.element.reportValidity();
+      }
     }
 
-    if (inputValue.trim().length < 10) {
-      setIsValidated(false);
-       problemText.current.setCustomValidity(
-        `Please lengthen this text to 10 characters or more (you're currently using ${inputValue.length} characters).`
-      );
-      return problemText.current.reportValidity();
-    }
-   
-    if (selectionValue.trim().length === 0) {
-      setIsValidated(false);
-       problemSelection.current.setCustomValidity("You must choose a location.");
-       return problemSelection.current.reportValidity();
-    }
-
-    problemSelection.current.setCustomValidity("");
+    problemText.current.setCustomValidity("");
     problemSelection.current.setCustomValidity("");
     setIsValidated(true);
-
-  
-
   }
-
 
   return (
     <form
