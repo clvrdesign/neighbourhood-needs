@@ -48,34 +48,34 @@ function ProblemForm({ showForm }) {
     const selectionValue = problemSelection.current.value;
 
 
-    const conditions = [
+    const invalidConditions = [
       {
         condition: inputValue.trim().length === 0,
         errorMessage: "You must state your problem first.",
-        element: problemText.current,
+        inputElement: problemText.current,
       },
       {
         condition: inputValue.trim().length < 10,
         errorMessage: `Please lengthen this text to 10 characters or more (you're currently using ${inputValue.length} characters).`,
-        element: problemText.current,
+        inputElement: problemText.current,
       },
       {
         condition: selectionValue.trim().length === 0,
         errorMessage: "You must choose a location.",
-        element: problemSelection.current,
+        inputElement: problemSelection.current,
       },
       {
         condition: !sortedNeighbourhoods.includes(selectionValue.trim()),
         errorMessage: "The location entered is not approved\n if you would like it added please send an email",
-        element: problemSelection.current,
+        inputElement: problemSelection.current,
       },
     ];
 
-    for (const condition of conditions) {
-      if (condition.condition) {
+    for (const invalidSubmission of invalidConditions) {
+      if (invalidSubmission.condition) {
         setIsValidated(false);
-        condition.element.setCustomValidity(condition.errorMessage);
-        return condition.element.reportValidity();
+        invalidSubmission.inputElement.setCustomValidity(invalidSubmission.errorMessage);
+        return invalidSubmission.inputElement.reportValidity();
       }
     }
 
