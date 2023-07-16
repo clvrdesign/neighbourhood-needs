@@ -7,7 +7,7 @@ const Header = ({showForm,setShowForm}) => {
         <img src={logoURL} alt="site logo" />
       </div>
       <h1>Neighbourhood Needs</h1>
-      <button className="form-toggle" onPointerDown={() => setShowForm((show) => !show )}>{showForm? `Close`:`Make an Entry!`}</button>
+      <button className="form-toggle" onPointerDown={() => setShowForm((show) => !show )}>{showForm? `Close`:`Report`}</button>
     </header>
   </>
   )

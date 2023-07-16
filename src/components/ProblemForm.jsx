@@ -1,13 +1,12 @@
 import { useRef, useState, useEffect } from "react";
 import { sortedNeighbourhoods } from "/src/utils/extractNeighbourhoods.js";
-
+import { v4 as generateID } from "uuid";
 function ProblemForm({ showForm }) {
   const [message, setMessage] = useState("");
   const [selected, setSelected] = useState("");
   const [isValidated, setIsValidated] = useState(false);
   const problemText = useRef(null);
   const problemSelection = useRef(null);
-  
 
   function handleProblemText(event) {
     const contents = event.target.value.trim();
@@ -47,7 +46,6 @@ function ProblemForm({ showForm }) {
     const inputValue = problemText.current.value;
     const selectionValue = problemSelection.current.value;
 
-
     const invalidConditions = [
       {
         condition: inputValue.trim().length === 0,
@@ -66,7 +64,8 @@ function ProblemForm({ showForm }) {
       },
       {
         condition: !sortedNeighbourhoods.includes(selectionValue.trim()),
-        errorMessage: "The location entered is not approved\n if you would like it added please send an email",
+        errorMessage:
+          "The location entered is not approved\n if you would like it added please send an email",
         inputElement: problemSelection.current,
       },
     ];
@@ -74,7 +73,9 @@ function ProblemForm({ showForm }) {
     for (const invalidSubmission of invalidConditions) {
       if (invalidSubmission.condition) {
         setIsValidated(false);
-        invalidSubmission.inputElement.setCustomValidity(invalidSubmission.errorMessage);
+        invalidSubmission.inputElement.setCustomValidity(
+          invalidSubmission.errorMessage
+        );
         return invalidSubmission.inputElement.reportValidity();
       }
     }
@@ -82,6 +83,10 @@ function ProblemForm({ showForm }) {
     problemText.current.setCustomValidity("");
     problemSelection.current.setCustomValidity("");
     setIsValidated(true);
+
+    function problemSubmission() {
+      const problemDetails = { id: generateID(), message, selected };
+    }
   }
 
   return (
