@@ -1,6 +1,11 @@
 import { useRef, useState, useEffect } from "react";
 import { sortedNeighbourhoods } from "/src/utils/extractNeighbourhoods.js";
 import { v4 as generateID } from "uuid";
+import { normalizeWords } from "/src/utils/normalizeWords.js";
+import { filterBadWords } from "/src/utils/filterBadWords.js";
+import { captureDateDetails } from "/src/utils/captureDateDetails.js";
+import { fetchIpAddress } from "/src/utils/fetchIpAddress.js";
+import { isMobileDevice } from "/src/utils/isMobileDevice.js";
 function ProblemForm({ showForm }) {
   const [message, setMessage] = useState("");
   const [selected, setSelected] = useState("");
@@ -9,7 +14,7 @@ function ProblemForm({ showForm }) {
   const problemSelection = useRef(null);
 
   function handleProblemText(event) {
-    const contents = event.target.value.trim();
+    const contents = event.target.value;
     const input = event.target;
     setMessage(contents);
 
@@ -41,29 +46,45 @@ function ProblemForm({ showForm }) {
     selection.setCustomValidity("");
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-    const inputValue = problemText.current.value;
-    const selectionValue = problemSelection.current.value;
+    let inputValue = problemText.current.value.trim();
+    let selectionValue = problemSelection.current.value.trim();
+
+
+ 
+
+
+    //normalize inputs to check against badword filter
+    //for each word entered, normalize it then check in badword filter
+    //if badword found invalidate submission
+  
+    
+   
 
     const invalidConditions = [
       {
-        condition: inputValue.trim().length === 0,
+        condition: inputValue.length === 0,
         errorMessage: "You must state your problem first.",
         inputElement: problemText.current,
       },
       {
-        condition: inputValue.trim().length < 10,
+        condition: inputValue.length < 10,
         errorMessage: `Please lengthen this text to 10 characters or more (you're currently using ${inputValue.length} characters).`,
         inputElement: problemText.current,
       },
       {
-        condition: selectionValue.trim().length === 0,
+        condition: await filterBadWords(normalizeWords(inputValue)),
+        errorMessage: "Please do not use bad words",
+        inputElement: problemText.current,
+      },
+      {
+        condition: selectionValue.length === 0,
         errorMessage: "You must choose a location.",
         inputElement: problemSelection.current,
       },
       {
-        condition: !sortedNeighbourhoods.includes(selectionValue.trim()),
+        condition: !sortedNeighbourhoods.includes(selectionValue),
         errorMessage:
           "The location entered is not approved\n if you would like it added please send an email",
         inputElement: problemSelection.current,
@@ -84,9 +105,21 @@ function ProblemForm({ showForm }) {
     problemSelection.current.setCustomValidity("");
     setIsValidated(true);
 
-    function problemSubmission() {
-      const problemDetails = { id: generateID(), message, selected };
-    }
+   const post = {
+     postID: generateID(),
+     problem: message,
+     postLocation: selected,
+     date: await captureDateDetails().basic,
+     postIPAddress: await fetchIpAddress(),
+     fromShadowBannedUser: false, //need database cross checking
+     votePositive: 0,
+     voteNegative: 0,
+     voteFlagged: 0,
+     userID: await JSON.parse(localStorage.getItem("NNGID")),
+     isMobileDevice:isMobileDevice()
+   };
+
+   console.log(post);
   }
 
   return (

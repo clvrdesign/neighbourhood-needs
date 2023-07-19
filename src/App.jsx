@@ -8,14 +8,20 @@ import Main from "./components/Main.jsx";
 import ProblemList from "./components/ProblemList.jsx";
 import { generateGuestFingerprint } from "./utils/generateGuestFingerprint.js";
 import { generateGuestId } from "./utils/generateGuestId.js";
+import { collectUserData } from "./utils/collectUserData.js";
 
 function App() {
   const [showForm, setShowForm] = useState(false);
   const [showFilter, setShowFilter] = useState(false);
 
   useEffect(() => {
-    generateGuestFingerprint();
-    generateGuestId();
+    (async () =>{
+
+      await generateGuestFingerprint();
+      await generateGuestId();
+     // await collectUserData();
+    
+    })() 
   }, []);
 
   return (

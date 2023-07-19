@@ -451,7 +451,14 @@ summary {
 .problems > * + * {
   margin-top: 1.5em;
 }
+sup{
+  color: #64748b;
+  font-weight: bold;
+  position: absolute;
+  top: 5%;
+  right: 20%;
 
+}
 .tag {
   padding: 1rem;
   text-transform: uppercase;
@@ -581,6 +588,7 @@ footer > * + * {
   header {
     flex-direction: row;
     align-items: center;
+    position: relative;
     /* text-align: end; */
   }
 

@@ -1,4 +1,4 @@
-import jsonData from '/src/neighbourhoods.json';
+import jsonData from '/src/utils/neighbourhoods.json';
 
 export default function extractNeighbourhoods(jsonData) {
    const neighbourhoods = [];
