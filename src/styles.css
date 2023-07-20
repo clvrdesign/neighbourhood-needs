@@ -237,7 +237,7 @@ font-size: var(--fs-0);
   }
   .logo:hover {
     scale: 1.09;
-    filter: invert();
+      filter: invert() drop-shadow(0 0 2em rgba(97, 225, 251, 0.667))  ;
   }
 
   .main-heading {

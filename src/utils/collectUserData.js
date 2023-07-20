@@ -1,9 +1,7 @@
 import { captureDateDetails } from "./captureDateDetails.js";
 import { fetchIpAddress } from "./fetchIpAddress.js";
 export async function collectUserData() {
-  //collect ip address
 
-  //collect date
 
   return {
     userID: await JSON.parse(localStorage.getItem("NNGID")),

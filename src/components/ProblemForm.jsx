@@ -1,11 +1,11 @@
 import { useRef, useState, useEffect } from "react";
-import { sortedNeighbourhoods } from "/src/utils/extractNeighbourhoods.js";
+import { sortedNeighbourhoods } from "utils/extractNeighbourhoods.js";
 import { v4 as generateID } from "uuid";
-import { normalizeWords } from "/src/utils/normalizeWords.js";
-import { filterBadWords } from "/src/utils/filterBadWords.js";
-import { captureDateDetails } from "/src/utils/captureDateDetails.js";
-import { fetchIpAddress } from "/src/utils/fetchIpAddress.js";
-import { isMobileDevice } from "/src/utils/isMobileDevice.js";
+import { normalizeWords } from "utils/normalizeWords.js";
+import { filterBadWords } from "utils/filterBadWords.js";
+import { captureDateDetails } from "utils/captureDateDetails.js";
+import { fetchIpAddress } from "utils/fetchIpAddress.js";
+import { isMobileDevice } from "utils/isMobileDevice.js";
 function ProblemForm({ showForm }) {
   const [message, setMessage] = useState("");
   const [selected, setSelected] = useState("");
@@ -105,21 +105,25 @@ function ProblemForm({ showForm }) {
     problemSelection.current.setCustomValidity("");
     setIsValidated(true);
 
-   const post = {
-     postID: generateID(),
-     problem: message,
-     postLocation: selected,
-     date: await captureDateDetails().basic,
-     postIPAddress: await fetchIpAddress(),
-     fromShadowBannedUser: false, //need database cross checking
-     votePositive: 0,
-     voteNegative: 0,
-     voteFlagged: 0,
-     userID: await JSON.parse(localStorage.getItem("NNGID")),
-     isMobileDevice:isMobileDevice()
-   };
+   try {
+       const post = {
+         postID: generateID(),
+         problem: message,
+         postLocation: selected,
+         date: await captureDateDetails().basic,
+         postIPAddress: await fetchIpAddress(),
+         fromShadowBannedUser: false, //need database cross checking
+         votePositive: 0,
+         voteNegative: 0,
+         voteFlagged: 0,
+         userID: await JSON.parse(localStorage.getItem("NNGID")),
+         isMobileDevice:isMobileDevice()
+       };
+   } catch (error) {
+    console.error("Problem Building Post:\n",error,"at:\n",error.stack)
+   }
 
-   console.log(post);
+  //  console.log(post);
   }
 
   return (

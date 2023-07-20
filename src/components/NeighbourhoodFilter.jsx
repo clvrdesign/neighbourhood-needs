@@ -1,4 +1,4 @@
-import {sortedNeighbourhoods} from "/src/utils/extractNeighbourhoods.js";
+import {sortedNeighbourhoods} from "utils/extractNeighbourhoods.js";
 import { useEffect } from "react";
 
 
