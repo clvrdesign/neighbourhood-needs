@@ -4,10 +4,29 @@
     <meta charset="UTF-8" />
     <!-- <link rel="icon" type="image/svg+xml" href="/vite.svg" /> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <noscript><link rel="stylesheet" href="./src/noscript.css" /></noscript>
     <title>Neighbourhood Needs</title>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="./src/main.jsx"></script>
+    <noscript>
+      <div id="no-script">
+        <div id="no-script-box">
+          <img id="no-script-img" src="./src/img/JavaScript_logo.png" alt="unofficial javascript logo" />
+          <p id="no-script-maintext">
+            Oh No! You need JavaScript to run this app.
+          </p>
+          <p id="no-script-subtext">
+            This Web application relies on Javascript to function, please
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://www.enable-javascript.com/">enable</a>
+            it. Thank You!🚀
+          </p>
+        </div>
+      </div>
+    </noscript>
   </body>
 </html>

@@ -18,7 +18,6 @@ function App() {
   useEffect(() => {
     (async () =>{
 
-
       await generateGuestFingerprint();
       await generateGuestId();
     //  const userCollectionResult = await handlePromise(collectUserData())
