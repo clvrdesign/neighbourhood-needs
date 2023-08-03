@@ -18,20 +18,19 @@ function App() {
 
   useEffect(() => {
     
-  async function fetchOnLoad() {
+  (async function () {
     try {
       
       await generateGuestFingerprint();
       await generateGuestId();
       const acquiredData = await collectUserData();
-    setUserData(acquiredData);
-    // console.log("userData", userData);
+      setUserData(acquiredData);
     } catch (err) {
-      console.log("err in app", err.message,err?.stack);
+      console.error("An Error Occurred", err.message,err?.stack);
     }
-  }
+  })()
 
-  fetchOnLoad();
+  // fetchOnLoad();
 
     
 

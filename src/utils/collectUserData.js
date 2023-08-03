@@ -9,7 +9,7 @@ export async function collectUserData() {
   return {
     userID: await subtleSecurity.constructor("getLocalStorage")("NNGID"),
     dateRegistered: await captureDateDetails().basic,
-    ipAddressRegistered: await fetchIpAddress(),
+    // ipAddressRegistered: await fetchIpAddress(),
     fingerprintRegistered: await subtleSecurity.constructor("getLocalStorage")(
       "NNGFP"
     ),

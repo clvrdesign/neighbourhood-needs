@@ -56,6 +56,11 @@ const security = (function () {
     }
     return cache.yourKey;
   }
+  async function rotateKey() {
+      cache.yourKey = await generateKey();
+      const newKey = await exportKey();
+    return newKey;
+  }
 
   async function initialize() {
     await getKey();
@@ -157,6 +162,7 @@ try {
     getLocalStorage,
     exportKey,
     importKey,
+    rotateKey,
   };
 
   return function () {
