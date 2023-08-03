@@ -14,17 +14,27 @@ import {handlePromise} from 'utils/handlePromise.js'
 function App() {
   const [showForm, setShowForm] = useState(false);
   const [showFilter, setShowFilter] = useState(false);
+  const [userData, setUserData] = useState({})
 
   useEffect(() => {
-    (async () =>{
-
+    
+  async function fetchOnLoad() {
+    try {
+      
       await generateGuestFingerprint();
       await generateGuestId();
-    //  const userCollectionResult = await handlePromise(collectUserData())
+      const acquiredData = await collectUserData();
+    setUserData(acquiredData);
+    // console.log("userData", userData);
+    } catch (err) {
+      console.log("err in app", err.message,err?.stack);
+    }
+  }
 
+  fetchOnLoad();
 
     
-    })() 
+
   }, []);
 
   return (
