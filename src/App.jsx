@@ -6,6 +6,7 @@ import Profile from "routes/Profile.jsx";
 import SignIn from "routes/SignIn.jsx";
 import SignUp from "routes/SignUp.jsx";
 import ForgotPassword from "routes/ForgotPassword.jsx";
+import Navbar from "components/Navbar.jsx";
 
 function App() {
  
@@ -20,6 +21,7 @@ function App() {
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
         </Routes>
+        <Navbar/>
       </Router>
     </>
   );
