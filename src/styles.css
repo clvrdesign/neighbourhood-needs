@@ -106,6 +106,7 @@
   .container {
     min-height: 100vh;
     padding: 30px;
+    margin-bottom: 85px !important;
   }
 
   /*
@@ -237,7 +238,7 @@ font-size: var(--fs-0);
   }
   .logo:hover {
     scale: 1.09;
-      filter: invert() drop-shadow(0 0 2em rgba(97, 225, 251, 0.667))  ;
+    filter: invert() drop-shadow(0 0 2em rgba(97, 225, 251, 0.667));
   }
 
   .main-heading {
@@ -451,13 +452,12 @@ summary {
 .problems > * + * {
   margin-top: 1.5em;
 }
-sup{
+sup {
   color: #64748b;
   font-weight: bold;
   position: absolute;
   top: 5%;
   right: 20%;
-
 }
 .tag {
   padding: 1rem;
@@ -496,18 +496,47 @@ a {
 }
 
 footer {
+  position: fixed;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
+  align-items: center;
   background-color: #020617;
   padding: 2.5rem 2rem;
   min-width: 100%;
   margin-top: 1.5rem;
   color: inherit;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 10;
+  height: 85px;
+  /* ensure container is offset by 85px on margin bottom */
+}
+
+.navigation-wrapper {
+  width: 100%;
+  margin-top: 0.75rem;
+  overflow-y: hidden;
+}
+.nav-list {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-evenly;
   align-items: center;
 }
-footer > * + * {
-  margin-top: 1.5rem;
+
+.list-item {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #64748b;
+}
+
+.list-item-active{
+  color:#e2e8f0;
 }
 
 @media only screen and (min-width: 1200px) {
@@ -607,7 +636,7 @@ footer > * + * {
     margin-left: 2rem;
   }
 
-  footer {
+  /* footer {
     flex-direction: row;
     justify-content: space-around;
     background-color: #020617;
@@ -616,7 +645,7 @@ footer > * + * {
     margin-top: 1.5rem;
     color: inherit;
     align-items: center;
-  }
+  } */
   footer > * + * {
     margin-top: 0;
   }
