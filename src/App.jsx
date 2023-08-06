@@ -1,50 +1,27 @@
-import { useEffect, useState } from "react";
-import Header from "components/Header.jsx";
-import "./styles.css";
-import Container from "components/Container.jsx";
-import NeighbourhoodFilter from "components/NeighbourhoodFilter.jsx";
-import ProblemForm from "components/ProblemForm.jsx";
-import Main from "components/Main.jsx";
-import ProblemList from "components/ProblemList.jsx";
-import { generateGuestFingerprint } from "utils/generateGuestFingerprint.js";
-import { generateGuestId } from "utils/generateGuestId.js";
-import { collectUserData } from "utils/collectUserData.js";
-import {handlePromise} from 'utils/handlePromise.js'
+
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import About from "routes/About.jsx";
+import Explore from "routes/Explore.jsx";
+import Profile from "routes/Profile.jsx";
+import SignIn from "routes/SignIn.jsx";
+import SignUp from "routes/SignUp.jsx";
+import ForgotPassword from "routes/ForgotPassword.jsx";
 
 function App() {
-  const [showForm, setShowForm] = useState(false);
-  const [showFilter, setShowFilter] = useState(false);
-  const [userData, setUserData] = useState({})
-
-  useEffect(() => {
-    
-  (async function () {
-    try {
-      
-      await generateGuestFingerprint();
-      await generateGuestId();
-      const acquiredData = await collectUserData();
-      setUserData(acquiredData);
-    } catch (err) {
-      console.error("An Error Occurred", err.message,err?.stack);
-    }
-  })()
-
-  // fetchOnLoad();
-
-    
-
-  }, []);
-
+ 
   return (
-    <Container>
-      <Header {...{ showForm, setShowForm }} />
-      <ProblemForm {...{ showForm }} />
-      <Main>
-        <NeighbourhoodFilter {...{ showFilter, setShowFilter }} />
-        <ProblemList />
-      </Main>
-    </Container>
+    <>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Explore />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/profile" element={<SignIn />} />
+          <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+        </Routes>
+      </Router>
+    </>
   );
 }
 

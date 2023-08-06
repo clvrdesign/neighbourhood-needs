@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 
-const namesOfFolders = ['src','components','img', 'utils']
+const namesOfFolders = ["src", "components", "img", "utils", "hooks", "routes"];
 const namesOfPaths = namesOfFolders.reduce((accumulator, current) => ({
   ...accumulator, [current]: `/${current === "src" ? current : "src/" + current}`
 }));
@@ -19,5 +19,5 @@ export default defineConfig({
     port: 8080,
   },
 })
-
+console.log(namesOfPaths);
 
