@@ -31,7 +31,7 @@ function ProblemList() {
               </div>
               <div className="report-author">
                 <div className="author-badge">
-                  {" "}
+                
                   <img
                     src={getBadgePaths("newcomer")}
                     alt=""
