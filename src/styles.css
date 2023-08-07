@@ -478,6 +478,95 @@ sup {
   gap: 1rem;
 }
 
+.post-metrics {
+  display: flex;
+  padding: 1rem;
+  font-size: var(--h5);
+  gap: 1rem;
+  justify-content: space-between;
+  flex-direction: column;
+}
+.author-stats {
+  display: flex;
+  flex-direction: column;
+}
+
+.report-date {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.5rem;
+  font-size: 16px;
+ color: #82a1ce;
+  font-weight: bold;
+}
+.report-author {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.5rem;
+  align-items: center;
+}
+.author-badge {
+  width: 40px;
+  filter: drop-shadow(1px 1px 2px black);
+  cursor: pointer;
+}
+.author-name {
+  margin-left: 15px;
+  color: #82a1ce;
+  cursor: pointer;
+}
+
+.report-stats {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
+  padding: .5rem;
+  font-size: 1rem;
+   color:#82a1ce
+}
+.reputation-score{
+  font-weight: bold;
+ 
+}
+
+.badges {
+  display: flex;
+  justify-content: flex-end;
+  margin-left: 0.3125rem;
+
+  align-items: center;
+}
+.badges > * {
+  padding-left: 0.2rem;
+}
+.badge {
+  margin-right: 3px;
+  margin-left: 2px;
+  min-width: 6px;
+  min-height: 6px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.badge--gold {
+  background-color: #ffcc01;
+}
+.badge--none {
+  background-color: transparent;
+}
+.badge--silver {
+  background-color: #b4b8bc;
+}
+.badge--bronze {
+  background-color: #d1a684;
+}
+
+.badge-count-none {
+  color: transparent;
+}
+
 .vote-btns > * {
   padding: 0.375rem 12px;
   border-radius: 0.625rem;
@@ -535,8 +624,8 @@ footer {
   color: #64748b;
 }
 
-.list-item-active{
-  color:#e2e8f0;
+.list-item-active {
+  color: #e2e8f0;
 }
 
 @media only screen and (min-width: 1200px) {
@@ -636,16 +725,13 @@ footer {
     margin-left: 2rem;
   }
 
-  /* footer {
+  .post-metrics {
     flex-direction: row;
-    justify-content: space-around;
-    background-color: #020617;
-    padding: 2.5rem 2rem;
-    min-width: 100%;
-    margin-top: 1.5rem;
-    color: inherit;
+  }
+  .vote-btns {
     align-items: center;
-  } */
+  }
+
   footer > * + * {
     margin-top: 0;
   }

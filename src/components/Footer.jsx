@@ -18,7 +18,7 @@ function Footer() {
               height="36px"
               fill={pathMatchesRoute("/") ? "#e2e8f0" : "#64748b"}
             />
-            <p className={pathMatchesRoute("/") && "list-item-active"}>
+            <p className={pathMatchesRoute("/") ? "list-item-active":""}>
               Explore
             </p>
           </li>
@@ -28,7 +28,7 @@ function Footer() {
               height="36px"
               fill={pathMatchesRoute("/about") ? "#e2e8f0" : "#64748b"}
             />
-            <p className={pathMatchesRoute("/about") && "list-item-active"}>
+            <p className={pathMatchesRoute("/about") ? "list-item-active":""}>
               About
             </p>
           </li>
@@ -38,7 +38,7 @@ function Footer() {
               height="36px"
               fill={pathMatchesRoute("/profile") ? "#e2e8f0" : "#64748b"}
             />
-            <p className={pathMatchesRoute("/profile") && "list-item-active"}>
+            <p className={pathMatchesRoute("/profile") ? "list-item-active":""}>
               Profile
             </p>
           </li>

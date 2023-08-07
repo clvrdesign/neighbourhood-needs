@@ -11,25 +11,23 @@ import { generateGuestFingerprint } from "utils/generateGuestFingerprint.js";
 import { generateGuestId } from "utils/generateGuestId.js";
 import { collectUserData } from "utils/collectUserData.js";
 import { handlePromise } from "utils/handlePromise.js";
-
 function Explore() {
-   const [showForm, setShowForm] = useState(false);
-   const [showFilter, setShowFilter] = useState(false);
-   const [userData, setUserData] = useState({});
+  const [showForm, setShowForm] = useState(false);
+  const [showFilter, setShowFilter] = useState(false);
+  const [userData, setUserData] = useState({});
 
-   useEffect(() => {
-     (async function () {
-       try {
-         await generateGuestFingerprint();
-         await generateGuestId();
-         const acquiredData = await collectUserData();
-         setUserData(acquiredData);
-       } catch (err) {
-         console.error("An Error Occurred", err.message, err?.stack);
-       }
-     })();
-   }, []);
-
+  useEffect(() => {
+    (async function () {
+      try {
+        await generateGuestFingerprint();
+        await generateGuestId();
+        const acquiredData = await collectUserData();
+        setUserData(acquiredData);
+      } catch (err) {
+        console.error("An Error Occurred", err.message, err?.stack);
+      }
+    })();
+  }, []);
 
   return (
     <>
