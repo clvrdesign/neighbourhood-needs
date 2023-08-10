@@ -108,6 +108,31 @@
     padding: 30px;
     margin-bottom: 85px !important;
   }
+  .form-container {
+    margin: 0 auto !important;
+    padding: 30px;
+    margin-bottom: 85px !important;
+    width: 100%;
+  }
+  .registration-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 3rem;
+    height: 100%;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .registration-form__input {
+    padding: 1rem;
+    font-size: var(--h6);
+    background-color: #64748b;
+    border-radius: 1rem;
+    width: 100%;
+    box-shadow: var(--box-shadow-2);
+  }
 
   /*
 p,article,summary{
@@ -275,6 +300,14 @@ header h1 {
   cursor: pointer;
   letter-spacing: -1.6px;
 }
+.form-container h1 {
+  text-transform: capitalize;
+  margin-bottom: 2rem;
+}
+.registration-link {
+  text-align: center;
+  display: block;
+}
 
 .problem-form {
   display: flex;
@@ -292,6 +325,7 @@ header h1 {
 .problem-form > textarea,
 .neighbourhood-select,
 .post-btn,
+.registration-form__signUpBtn,
 .form-toggle {
   padding: 1rem;
   font-size: var(--h6);
@@ -300,6 +334,8 @@ header h1 {
   width: 100%;
   box-shadow: var(--box-shadow-2);
 }
+
+
 
 textarea {
   min-height: 152px;
@@ -317,21 +353,21 @@ textarea {
   box-shadow: none;
 }
 
-
-
-
 .form-toggle {
   margin-top: 1.5rem;
   background-color: #0f172a;
   text-transform: uppercase;
   font-weight: bold;
 }
+
 .post-btn,
-.form-toggle {
+.form-toggle,
+.registration-form__signUpBtn {
   cursor: pointer;
   transition: 0.3s ease;
 }
-.form-toggle:hover {
+.form-toggle:hover,
+.registration-form__signUpBtn:hover {
   background-color: #64748b;
   scale: 0.95;
 }
@@ -348,7 +384,8 @@ textarea {
   scale: 1;
 }
 .problem-form textarea::placeholder,
-.problem-form input::placeholder {
+.problem-form input::placeholder,
+.registration-form__input::placeholder {
   color: #cbd5e1;
   font-weight: bold;
 }
@@ -686,6 +723,13 @@ footer {
 }
 
 @media only screen and (min-width: 1200px) {
+  .registration-form__input {
+    width: 50%;
+  }
+  .registration-form__signUpBtn{
+  width: 50%;
+}
+
   textarea {
     resize: none;
     /* overflow: hidden; */

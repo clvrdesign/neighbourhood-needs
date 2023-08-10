@@ -19,7 +19,7 @@ function Footer() {
               fill={pathMatchesRoute("/") ? "#e2e8f0" : "#64748b"}
             />
             <p className={pathMatchesRoute("/") ? "list-item-active":""}>
-              Explore
+              Reports
             </p>
           </li>
           <li className="list-item" onPointerDown={() => navigate("/about")}>
