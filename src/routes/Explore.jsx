@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import Header from "components/Header.jsx";
 import "/src/styles.css";
-import Container from "components/Container.jsx";
 import NeighbourhoodFilter from "components/NeighbourhoodFilter.jsx";
 import ProblemForm from "components/ProblemForm.jsx";
-import Main from "components/Main.jsx";
 import ProblemList from "components/ProblemList.jsx";
 
 import { generateGuestFingerprint } from "utils/generateGuestFingerprint.js";
@@ -31,14 +29,14 @@ function Explore() {
 
   return (
     <>
-      <Container>
+      <div className="container">
         <Header {...{ showForm, setShowForm }} />
         <ProblemForm {...{ showForm }} />
-        <Main>
+        <main>
           <NeighbourhoodFilter {...{ showFilter, setShowFilter }} />
           <ProblemList />
-        </Main>
-      </Container>
+        </main>
+      </div>
     </>
   );
 }
