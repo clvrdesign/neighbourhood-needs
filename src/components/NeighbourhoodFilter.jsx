@@ -1,8 +1,9 @@
 import {sortedNeighbourhoods} from "utils/extractNeighbourhoods.js";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 
-function NeighbourhoodFilter({showFilter,setShowFilter}) {
+function NeighbourhoodFilter() {
+    const [showFilter, setShowFilter] = useState(false);
   useEffect(() => {
     const mediaQuery = window.matchMedia('(min-width: 1200px)')
 
