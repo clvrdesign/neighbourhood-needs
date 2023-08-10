@@ -335,8 +335,6 @@ header h1 {
   box-shadow: var(--box-shadow-2);
 }
 
-
-
 textarea {
   min-height: 152px;
   height: 152px;
@@ -726,9 +724,9 @@ footer {
   .registration-form__input {
     width: 50%;
   }
-  .registration-form__signUpBtn{
-  width: 50%;
-}
+  .registration-form__signUpBtn {
+    width: 50%;
+  }
 
   textarea {
     resize: none;
