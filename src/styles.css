@@ -289,6 +289,7 @@ header h1 {
 }
 
 .problem-form > input,
+.problem-form > textarea,
 .neighbourhood-select,
 .post-btn,
 .form-toggle {
@@ -300,12 +301,24 @@ header h1 {
   box-shadow: var(--box-shadow-2);
 }
 
+textarea {
+  min-height: 152px;
+  height: 152px;
+  resize: none;
+  overflow: hidden;
+  scrollbar-width: thin;
+}
+
 .problem-form > input:focus-visible,
+.problem-form > textarea:focus-visible,
 .neighbourhood-select:focus-visible,
 .post-btn:focus-visible,
 .form-toggle:focus-visible {
   box-shadow: none;
 }
+
+
+
 
 .form-toggle {
   margin-top: 1.5rem;
@@ -334,6 +347,7 @@ header h1 {
   background-color: #999;
   scale: 1;
 }
+.problem-form textarea::placeholder,
 .problem-form input::placeholder {
   color: #cbd5e1;
   font-weight: bold;
@@ -672,6 +686,15 @@ footer {
 }
 
 @media only screen and (min-width: 1200px) {
+  textarea {
+    resize: none;
+    /* overflow: hidden; */
+    min-height: 56px;
+    height: 56px;
+    max-height: 200px;
+    overflow: hidden;
+  }
+
   .vote-button-icon {
     padding: 7px 14px;
   }

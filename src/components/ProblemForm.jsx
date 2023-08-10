@@ -7,6 +7,8 @@ import { captureDateDetails } from "utils/captureDateDetails.js";
 import { fetchIpAddress } from "utils/fetchIpAddress.js";
 import { isMobileDevice } from "utils/isMobileDevice.js";
 import logoURL from "img/NNLogoWhite.png";
+import { autosize } from "utils/autosizeTextArea.js";
+import { showCharLimit } from "utils/showCharLimit.js";
 function ProblemForm() {
   const [message, setMessage] = useState("");
   const [selected, setSelected] = useState("");
@@ -141,15 +143,18 @@ function ProblemForm() {
         className={`problem-form ${showForm || "problem-form--hidden"}`}
         onSubmit={handleSubmit}
       >
-        <input
+        <textarea
+          maxLength={200}
+          rows={5}
           type="text"
           placeholder="Whats wrong in your Neighbourhood?"
           className="message"
           value={message}
           onChange={handleProblemText}
+          onKeyDown={autosize}
           ref={problemText}
         />
-        <span className="character-count">200</span>
+        <span className="character-count">{showCharLimit(problemText)}</span>
         <input
           className="evidence-submit"
           type="text"
