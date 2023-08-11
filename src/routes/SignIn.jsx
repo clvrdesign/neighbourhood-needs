@@ -17,7 +17,7 @@ function SignIn() {
   const { email, password } = formData;
   return (
     <div className="form-container">
-      <header>
+      <header className="registration-header">
         <h1> Sign In</h1>
       </header>
       <form className="registration-form">

@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { db } from "src/firebase.config.js";
 function SignUp() {
   const [formData, setFormData] = useState({
     name: "",
@@ -9,16 +14,16 @@ function SignUp() {
   });
 
   function onChange(event) {
-    setFormData((prevestate) =>({
+    setFormData((prevestate) => ({
       ...prevestate,
-      [event.target.id]:event.target.value
-    }) )
+      [event.target.id]: event.target.value,
+    }));
   }
 
-  const {name, email, password} = formData
+  const { name, email, password } = formData;
   return (
     <div className="form-container">
-      <header>
+      <header className="registration-header">
         <h1> Sign Up </h1>
       </header>
       <form className="registration-form">
