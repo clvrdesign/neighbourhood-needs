@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 function SignIn() {
   const [formData, setFormData] = useState({
     email: "",
@@ -15,12 +15,32 @@ function SignIn() {
   }
 
   const { email, password } = formData;
+  const navigate = useNavigate();
+
+  async function onSubmit(event) {
+   try {
+     event.preventDefault();
+     const auth = getAuth();
+     const userCredential = await signInWithEmailAndPassword(
+       auth,
+       email,
+       password
+     );
+
+     if (userCredential.user) {
+       navigate("/");
+     }
+    
+   } catch (error) {
+    console.log(error)
+   }
+  }
   return (
     <div className="form-container">
       <header className="registration-header">
         <h1> Sign In</h1>
       </header>
-      <form className="registration-form">
+      <form className="registration-form" onSubmit={onSubmit}>
         <input
           className="registration-form__input"
           type="email"
