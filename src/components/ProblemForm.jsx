@@ -103,17 +103,20 @@ function ProblemForm() {
     setIsValidated(true);
 
     try {
+      if (!isValidated) {
+        return
+      }
       const post = {
-        postID: generateID(),
+        // postID: generateID(),
         problem: message,
         postLocation: selected,
-        date: await captureDateDetails().basic,
+        // date: await captureDateDetails().basic,
         postIPAddress: await fetchIpAddress(),
-        fromShadowBannedUser: false, //need database cross checking
+        // fromShadowBannedUser: false, //need database cross checking
         votePositive: 0,
         voteNegative: 0,
         voteFlagged: 0,
-        userID: await JSON.parse(localStorage.getItem("NNGID")),
+        // userID: await JSON.parse(localStorage.getItem("NNGID")),
         isMobileDevice: isMobileDevice(),
       };
     } catch (error) {
@@ -154,7 +157,7 @@ function ProblemForm() {
           onKeyDown={autosize}
           ref={problemText}
         />
-        <span className="character-count">{showCharLimit(problemText)}</span>
+        <span className="character-count">{message?showCharLimit(message):200}</span>
         <input
           className="evidence-submit"
           type="text"

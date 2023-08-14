@@ -335,6 +335,8 @@ header h1 {
   border-radius: 1rem;
   width: 100%;
   box-shadow: var(--box-shadow-2);
+  
+    text-shadow: var(--text-shadow-1);
 }
 
 .registration-form__signUpBtn {
@@ -369,6 +371,8 @@ textarea {
 .registration-form__signUpBtn {
   cursor: pointer;
   transition: 0.3s ease;
+
+  text-shadow: var(--text-shadow-1);
 }
 .form-toggle:hover,
 .registration-form__signUpBtn:hover {
@@ -631,6 +635,7 @@ sup {
   gap: 1rem;
   justify-content: space-evenly;
 
+  text-shadow: var(--text-shadow-1);
   /* background-color: #fff; */
   /* outline:2px solid tomato; */
 }
@@ -727,7 +732,7 @@ footer {
 }
 
 fieldset {
- box-shadow: var(--box-shadow-2);
+  box-shadow: var(--box-shadow-2);
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -741,16 +746,17 @@ fieldset {
 }
 /* *{outline:2px solid tomato;} */
 legend {
-   color: #e2e8f0;
+  color: #e2e8f0;
   font-weight: bold;
   text-align: left;
+  text-shadow: var(--text-shadow-1);
 }
 .fieldset_input {
   margin: 0 1rem;
 }
 
 @media only screen and (min-width: 1200px) {
-  fieldset{
+  fieldset {
     width: 25%;
   }
   .registration-form__input {
@@ -758,6 +764,8 @@ legend {
   }
   .registration-form__signUpBtn {
     width: 8%;
+
+    text-shadow: var(--text-shadow-1);
   }
 
   textarea {

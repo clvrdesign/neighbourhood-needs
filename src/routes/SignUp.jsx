@@ -85,7 +85,7 @@ function SignUp() {
           value={name}
           onChange={onChange}
           required
-          placeholder="enter first and last name"
+          placeholder="Enter first and last name"
         />
         <input
           className="registration-form__input"
@@ -95,7 +95,7 @@ function SignUp() {
           value={email}
           onChange={onChange}
           required
-          placeholder="enter email"
+          placeholder="Enter email"
         />
         <input
           className="registration-form__input"
@@ -107,10 +107,10 @@ function SignUp() {
           required
           minLength={8}
           maxLength={32}
-          placeholder="enter password"
+          placeholder="Enter password"
         />
         <fieldset>
-          <legend>Select Signature:</legend>
+          <legend>Select signature</legend>
           <input
             className="fieldset_input"
             type="radio"
