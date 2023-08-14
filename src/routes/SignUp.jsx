@@ -56,6 +56,15 @@ function SignUp() {
       formDataCopy.silverBadgesCount = 0;
       formDataCopy.bronzeBadgesCount = 0;
       formDataCopy.goldBadgesCount = 0;
+
+      //set local id and fingerprint encrypting with user key
+      await subtleSecurity.constructor("importKey")(formDataCopy.key);
+      await subtleSecurity.constructor("setLocalStorage")(
+        "NNRFP",
+        formDataCopy.fingerprintRegistered
+      );
+      await subtleSecurity.constructor("setLocalStorage")("NNRID", user.uid);
+
       await setDoc(doc(db, "users", user.uid), formDataCopy);
     } catch (error) {
       console.error(error);
