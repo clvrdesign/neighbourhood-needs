@@ -12,30 +12,39 @@ import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { subtleSecurity } from "src/utils/subtleSecurity.js";
 import { fetchIpAddress } from "src/utils/fetchIpAddress.js";
 import { toast } from "react-toastify";
+import { sortedNeighbourhoods } from "src/utils/extractNeighbourhoods.js";
+import { generateGuestFingerprint } from "src/utils/generateGuestFingerprint.js";
 function SignUp() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
     signature: "",
+    location: "",
   });
-  const { name, email, password } = formData;
+  const { name, email, password, location, signature } = formData;
   const navigate = useNavigate();
-    const toastOptions = {
-      position: "top-right",
-      autoClose: 1500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    };
+  const toastOptions = {
+    position: "top-right",
+    autoClose: 1500,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  };
 
   function onChange(event) {
     setFormData((prevestate) => ({
       ...prevestate,
       [event.target.id]: event.target.value,
+    }));
+  }
+  function handleSignature(event) {
+    setFormData((prevestate) => ({
+      ...prevestate,
+        signature: event.target.value,
     }));
   }
 
@@ -50,35 +59,27 @@ function SignUp() {
       );
       const { user } = userCredential;
       await updateProfile(auth.currentUser, { displayName: name });
-      navigate("/");
-
       // build user object for db injection
       const formDataCopy = { ...formData };
       delete formDataCopy.password;
       formDataCopy.dateRegistered = serverTimestamp();
       formDataCopy.ipAddressRegistered = await fetchIpAddress();
-      formDataCopy.fingerprintRegistered = await subtleSecurity.constructor(
-        "getLocalStorage"
-      )("NNGFP");
-      //for local storage encryption
-      formDataCopy.key = await subtleSecurity.constructor("rotateKey")();
       formDataCopy.isShadowBanned = false;
       formDataCopy.likedPost = [""];
       formDataCopy.silverBadgesCount = 0;
       formDataCopy.bronzeBadgesCount = 0;
       formDataCopy.goldBadgesCount = 0;
-
-      //set local id and fingerprint encrypting with user key
-      await subtleSecurity.constructor("importKey")(formDataCopy.key);
-      await subtleSecurity.constructor("setLocalStorage")(
-        "NNRFP",
-        formDataCopy.fingerprintRegistered
-      );
-      await subtleSecurity.constructor("setLocalStorage")("NNRID", user.uid);
-
+      formDataCopy.location = location;
+      formDataCopy.fingerprintRegistered = await generateGuestFingerprint();
+      //set local fingerprint encrypting with user key
+      //for local storage encryption
+      formDataCopy.key = await subtleSecurity.constructor("rotateKey")();
       await setDoc(doc(db, "users", user.uid), formDataCopy);
+      navigate("/");
+      toast.success("Registration Successful", toastOptions);
     } catch (error) {
-     toast.error("Registration Error, try again later", toastOptions);
+      console.log(error);
+      toast.error("Registration error, try again later", toastOptions);
     }
   }
 
@@ -120,6 +121,24 @@ function SignUp() {
           maxLength={32}
           placeholder="Enter password"
         />
+
+        <div className="select-container signUp-select">
+          <select
+            className="neighbourhood-select"
+            value={location}
+            id="location"
+            onChange={onChange}
+            required
+          >
+            <option value="">Where are you from?</option>
+            {sortedNeighbourhoods.map((aNeighbourhood) => (
+              <option key={aNeighbourhood} value={aNeighbourhood}>
+                {aNeighbourhood}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <fieldset>
           <legend>Select signature</legend>
           <input

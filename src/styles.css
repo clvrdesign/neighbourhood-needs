@@ -303,7 +303,7 @@ header h1 {
 }
 .form-container h1 {
   text-transform: capitalize;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 .registration-header {
   justify-content: center;
@@ -336,8 +336,8 @@ header h1 {
   border-radius: 1rem;
   width: 100%;
   box-shadow: var(--box-shadow-2);
-  
-    text-shadow: var(--text-shadow-1);
+
+  text-shadow: var(--text-shadow-1);
 }
 
 .registration-form__signUpBtn {
@@ -753,24 +753,79 @@ legend {
   text-shadow: var(--text-shadow-1);
 }
 .fieldset_input {
-  margin: 0 .4rem;
+  margin: 0 0.4rem;
 }
-footer li p{
+footer li p {
   font-weight: bold;
   font-size: 1.2rem;
 }
 
-
-.Toastify__toast-theme--light{
-  background-color:#e2e8f0 ;
+.Toastify__toast-theme--light {
+  background-color: #e2e8f0;
   filter: drop-shadow(2px 4px 6px black);
   color: #0f172a;
 }
 
+.profile-container {
+  min-height: 100vh;
+  padding: 30px;
+  margin: 0 auto;
+  margin-bottom: 85px !important;
+}
+.profile-container header {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  padding: 3rem;
+}
+.profile-container header h1{
+  font-size: 2rem;
+  text-transform: capitalize;
+}
 
+.profile-container header button {
+  padding: 1rem;
+  font-size: var(--h6);
+  background-color: #64748b;
+  border-radius: 1rem;
+  width: 45%;
+  box-shadow: var(--box-shadow-2);
 
+  text-shadow: var(--text-shadow-1);
+}
+
+.profile-info{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+.profile-info__heading{
+  margin-top: 1rem;
+}
+
+.profile-info__item{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.profile-info__text{
+  font-size: .8rem;
+  margin-left: .6rem;
+  text-transform: capitalize;
+}
+/* *{outline:2px solid tomato;} */
+.signUp-select{
+  width: 100%;
+}
 
 @media only screen and (min-width: 1200px) {
+
+  .signUp-select{
+     width: 25%;
+  }
   fieldset {
     width: 25%;
   }
