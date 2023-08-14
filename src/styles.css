@@ -754,7 +754,10 @@ legend {
 .fieldset_input {
   margin: 0 1rem;
 }
-
+footer li p{
+  font-weight: bold;
+  font-size: 1.2rem;
+}
 @media only screen and (min-width: 1200px) {
   fieldset {
     width: 25%;

@@ -9,26 +9,41 @@ import { isMobileDevice } from "utils/isMobileDevice.js";
 import logoURL from "img/NNLogoWhite.png";
 import { autosize } from "utils/autosizeTextArea.js";
 import { showCharLimit } from "utils/showCharLimit.js";
+import { subtleSecurity } from "src/utils/subtleSecurity.js";
+
 function ProblemForm() {
-  const [message, setMessage] = useState("");
-  const [selected, setSelected] = useState("");
-  const [isValidated, setIsValidated] = useState(false);
-  const [showForm, setShowForm] = useState(false);
+  const initialState = {
+    message: "",
+    selected: "",
+    isValidated: false,
+    showForm: false,
+  };
+
+  const [formData, setFormData] = useState(initialState);
   const problemText = useRef(null);
   const problemSelection = useRef(null);
 
   function handleProblemText(event) {
     const contents = event.target.value;
     const input = event.target;
-    setMessage(contents);
+    setFormData((prevData) => ({
+      ...prevData,
+      message: contents,
+    }));
 
     if (contents.trim()?.length === 0) {
-      setIsValidated(false);
+      setFormData((prevData) => ({
+        ...prevData,
+        isValidated: false,
+      }));
       return input.setCustomValidity("You must state your problem first.");
     }
 
     if (contents.trim()?.length < 10) {
-      setIsValidated(false);
+      setFormData((prevData) => ({
+        ...prevData,
+        isValidated: false,
+      }));
       return input.setCustomValidity(
         `Please lengthen this text to 10 characters or more (you're currently using ${contents.length} characters).`
       );
@@ -40,10 +55,16 @@ function ProblemForm() {
   function handleSelect(event) {
     const contents = event.target.value;
     const selection = event.target;
-    setSelected(contents);
+    setFormData((prevData) => ({
+      ...prevData,
+      selected: contents,
+    }));
 
     if (contents.length === 0) {
-      setIsValidated(false);
+      setFormData((prevData) => ({
+        ...prevData,
+        isValidated: false,
+      }));
       return selection.setCustomValidity("You must choose a location.");
     }
 
@@ -55,9 +76,9 @@ function ProblemForm() {
     let inputValue = problemText.current.value.trim();
     let selectionValue = problemSelection.current.value.trim();
 
-    //normalize inputs to check against badword filter
-    //for each word entered, normalize it then check in badword filter
-    //if badword found invalidate submission
+    // Normalize inputs and check against badword filter
+    // for each word entered, normalize it then check in the badword filter
+    // if a badword is found, invalidate submission
 
     const invalidConditions = [
       {
@@ -90,7 +111,10 @@ function ProblemForm() {
 
     for (const invalidSubmission of invalidConditions) {
       if (invalidSubmission.condition) {
-        setIsValidated(false);
+        setFormData((prevData) => ({
+          ...prevData,
+          isValidated: false,
+        }));
         invalidSubmission.inputElement.setCustomValidity(
           invalidSubmission.errorMessage
         );
@@ -100,30 +124,35 @@ function ProblemForm() {
 
     problemText.current.setCustomValidity("");
     problemSelection.current.setCustomValidity("");
-    setIsValidated(true);
+    setFormData((prevData) => ({
+      ...prevData,
+      isValidated: true,
+    }));
 
     try {
-      if (!isValidated) {
-        return
+      if (!formData.isValidated) {
+        return;
       }
+
+      // Rest of the post object creation code
       const post = {
-        // postID: generateID(),
-        problem: message,
-        postLocation: selected,
-        // date: await captureDateDetails().basic,
-        postIPAddress: await fetchIpAddress(),
-        // fromShadowBannedUser: false, //need database cross checking
-        votePositive: 0,
-        voteNegative: 0,
-        voteFlagged: 0,
-        // userID: await JSON.parse(localStorage.getItem("NNGID")),
+        problem: formData.message,
+        postLocation: formData.selected,
+        fromShadowBannedUser: false,
+        // postIPAddress: await fetchIpAddress(),
+        userFingerPrint: await subtleSecurity.constructor("getLocalStorage")(
+          "NNGFP"
+        ),
+        votePositiveBy: [""],
+        voteNegativeBy: [""],
+        voteFlaggedBy: [""],
         isMobileDevice: isMobileDevice(),
       };
+
+      console.log(post);
     } catch (error) {
       console.error("Problem Building Post:\n", error, "at:\n", error.stack);
     }
-
-    //  console.log(post);
   }
 
   return (
@@ -136,14 +165,21 @@ function ProblemForm() {
         <sup>[BETA]</sup>
         <button
           className="form-toggle"
-          onPointerDown={() => setShowForm((show) => !show)}
+          onPointerDown={() =>
+            setFormData((prevData) => ({
+              ...prevData,
+              showForm: !prevData.showForm,
+            }))
+          }
         >
-          {showForm ? `Close` : `Report`}
+          {formData.showForm ? `Close` : `Report`}
         </button>
       </header>
       <form
         action=""
-        className={`problem-form ${showForm || "problem-form--hidden"}`}
+        className={`problem-form ${
+          formData.showForm || "problem-form--hidden"
+        }`}
         onSubmit={handleSubmit}
       >
         <textarea
@@ -152,12 +188,13 @@ function ProblemForm() {
           type="text"
           placeholder="Whats wrong in your Neighbourhood?"
           className="message"
-          value={message}
+          value={formData.message}
           onChange={handleProblemText}
-          onKeyDown={autosize}
           ref={problemText}
         />
-        <span className="character-count">{message?showCharLimit(message):200}</span>
+        <span className="character-count">
+          {formData.message ? showCharLimit(formData.message) : 200}
+        </span>
         <input
           className="evidence-submit"
           type="text"
@@ -166,7 +203,7 @@ function ProblemForm() {
         <div className="select-container">
           <select
             className="neighbourhood-select"
-            value={selected}
+            value={formData.selected}
             onChange={handleSelect}
             ref={problemSelection}
           >
