@@ -304,7 +304,7 @@ header h1 {
   text-transform: capitalize;
   margin-bottom: 2rem;
 }
-.registration-header{
+.registration-header {
   justify-content: center;
 }
 .registration-link {
@@ -338,8 +338,8 @@ header h1 {
 }
 
 .registration-form__signUpBtn {
-    width: 45%;
-  }
+  width: 45%;
+}
 
 textarea {
   min-height: 152px;
@@ -726,7 +726,33 @@ footer {
   color: #e2e8f0;
 }
 
+fieldset {
+ box-shadow: var(--box-shadow-2);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  padding: 1rem;
+  width: 100%;
+  border-radius: 1rem;
+  background-color: #64748b;
+  border-color: transparent;
+  flex-wrap: wrap;
+}
+/* *{outline:2px solid tomato;} */
+legend {
+   color: #e2e8f0;
+  font-weight: bold;
+  text-align: left;
+}
+.fieldset_input {
+  margin: 0 1rem;
+}
+
 @media only screen and (min-width: 1200px) {
+  fieldset{
+    width: 25%;
+  }
   .registration-form__input {
     width: 25%;
   }

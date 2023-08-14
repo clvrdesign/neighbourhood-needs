@@ -22,12 +22,12 @@ function ProblemForm() {
     const input = event.target;
     setMessage(contents);
 
-    if (contents.trim().length === 0) {
+    if (contents.trim()?.length === 0) {
       setIsValidated(false);
       return input.setCustomValidity("You must state your problem first.");
     }
 
-    if (contents.trim().length < 10) {
+    if (contents.trim()?.length < 10) {
       setIsValidated(false);
       return input.setCustomValidity(
         `Please lengthen this text to 10 characters or more (you're currently using ${contents.length} characters).`

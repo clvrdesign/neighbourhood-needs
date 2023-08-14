@@ -6,11 +6,17 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { db } from "src/firebase.config.js";
+import { transformName } from "utils/transformName.js";
+import { getInitials } from "utils/getInitials.js";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { subtleSecurity } from "src/utils/subtleSecurity.js";
+import { fetchIpAddress } from "src/utils/fetchIpAddress.js";
 function SignUp() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
+    signature: "",
   });
   const { name, email, password } = formData;
   const navigate = useNavigate();
@@ -26,14 +32,31 @@ function SignUp() {
     event.preventDefault();
     try {
       const auth = getAuth();
-      const userCredential = createUserWithEmailAndPassword(
+      const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
       const { user } = userCredential;
-      updateProfile(auth.currentUser, { displayName: name });
+      await updateProfile(auth.currentUser, { displayName: name });
       navigate("/");
+
+      // build user object for db injection
+      const formDataCopy = { ...formData };
+      delete formDataCopy.password;
+      formDataCopy.dateRegistered = serverTimestamp();
+      formDataCopy.ipAddressRegistered = await fetchIpAddress();
+      formDataCopy.fingerprintRegistered = await subtleSecurity.constructor(
+        "getLocalStorage"
+      )("NNGFP");
+      //for local storage encryption
+      formDataCopy.key = await subtleSecurity.constructor("rotateKey")();
+      formDataCopy.isShadowBanned = false;
+      formDataCopy.likedPost = [""];
+      formDataCopy.silverBadgesCount = 0;
+      formDataCopy.bronzeBadgesCount = 0;
+      formDataCopy.goldBadgesCount = 0;
+      await setDoc(doc(db, "users", user.uid), formDataCopy);
     } catch (error) {
       console.error(error);
     }
@@ -77,6 +100,37 @@ function SignUp() {
           maxLength={32}
           placeholder="enter password"
         />
+        <fieldset>
+          <legend>Select Signature:</legend>
+          <input
+            className="fieldset_input"
+            type="radio"
+            title="signature style"
+            id="signature"
+            name="signatureStyle"
+            value={transformName(name)}
+            onChange={onChange}
+            required
+          />
+          <label htmlFor="signatureShort">
+            {name
+              ? transformName(name)
+              : transformName("John Doe") + "(example)"}
+          </label>
+          <input
+            className="fieldset_input"
+            type="radio"
+            title="signature style"
+            name="signatureStyle"
+            id="signature"
+            value={getInitials(name)}
+            onChange={onChange}
+            required
+          />
+          <label htmlFor="signatureInitials">
+            {name ? getInitials(name) : getInitials("John Doe") + "(example)"}
+          </label>
+        </fieldset>
 
         <button className="registration-form__signUpBtn">Sign Up</button>
       </form>

@@ -13,10 +13,10 @@ function Explore() {
   useEffect(() => {
     (async function () {
       try {
+        //overwrite with user's on key when registered!
         await generateGuestFingerprint();
-        await generateGuestId();
-        const acquiredData = await collectUserData();
-        setUserData(acquiredData);
+        // const acquiredData = await collectUserData();
+        // setUserData(acquiredData);
       } catch (err) {
         console.error("An Error Occurred", err.message, err?.stack);
       }
