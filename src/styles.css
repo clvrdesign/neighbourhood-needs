@@ -111,6 +111,7 @@
   .form-container {
     margin: 0 auto !important;
     padding: 30px;
+    padding-top: 15px;
     margin-bottom: 85px !important;
     width: 100%;
   }
@@ -231,7 +232,7 @@ font-size: var(--fs-0);
     *,
     *::before,
     *::after {
-      animation-duration: 0.01ms !important;
+      /* animation-duration: 0.01ms !important; */
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
@@ -302,7 +303,7 @@ header h1 {
 }
 .form-container h1 {
   text-transform: capitalize;
-  margin-bottom: 2rem;
+  margin-bottom: .5rem;
 }
 .registration-header {
   justify-content: center;
@@ -742,7 +743,7 @@ fieldset {
   border-radius: 1rem;
   background-color: #64748b;
   border-color: transparent;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
 }
 /* *{outline:2px solid tomato;} */
 legend {
@@ -752,12 +753,23 @@ legend {
   text-shadow: var(--text-shadow-1);
 }
 .fieldset_input {
-  margin: 0 1rem;
+  margin: 0 .4rem;
 }
 footer li p{
   font-weight: bold;
   font-size: 1.2rem;
 }
+
+
+.Toastify__toast-theme--light{
+  background-color:#e2e8f0 ;
+  filter: drop-shadow(2px 4px 6px black);
+  color: #0f172a;
+}
+
+
+
+
 @media only screen and (min-width: 1200px) {
   fieldset {
     width: 25%;

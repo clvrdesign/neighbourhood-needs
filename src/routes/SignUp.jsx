@@ -11,6 +11,7 @@ import { getInitials } from "utils/getInitials.js";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { subtleSecurity } from "src/utils/subtleSecurity.js";
 import { fetchIpAddress } from "src/utils/fetchIpAddress.js";
+import { toast } from "react-toastify";
 function SignUp() {
   const [formData, setFormData] = useState({
     name: "",
@@ -20,6 +21,16 @@ function SignUp() {
   });
   const { name, email, password } = formData;
   const navigate = useNavigate();
+    const toastOptions = {
+      position: "top-right",
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    };
 
   function onChange(event) {
     setFormData((prevestate) => ({
@@ -67,7 +78,7 @@ function SignUp() {
 
       await setDoc(doc(db, "users", user.uid), formDataCopy);
     } catch (error) {
-      console.error(error);
+     toast.error("Registration Error, try again later", toastOptions);
     }
   }
 
@@ -124,7 +135,7 @@ function SignUp() {
           <label htmlFor="signatureShort">
             {name
               ? transformName(name)
-              : transformName("John Doe") + "(example)"}
+              : transformName("John Doe") + "\n(example)"}
           </label>
           <input
             className="fieldset_input"

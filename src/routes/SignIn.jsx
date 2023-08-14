@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { toast } from "react-toastify";
 function SignIn() {
   const [formData, setFormData] = useState({
     email: "",
@@ -15,25 +16,37 @@ function SignIn() {
   }
 
   const { email, password } = formData;
+  const toastOptions = {
+    position: "top-right",
+    autoClose: 1500,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  };
   const navigate = useNavigate();
-
   async function onSubmit(event) {
-   try {
-     event.preventDefault();
-     const auth = getAuth();
-     const userCredential = await signInWithEmailAndPassword(
-       auth,
-       email,
-       password
-     );
+    try {
+      event.preventDefault();
+      const auth = getAuth();
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
 
-     if (userCredential.user) {
-       navigate("/");
-     }
-    
-   } catch (error) {
-    console.log(error)
-   }
+      if (userCredential.user) {
+        navigate("/");
+        toast.success(
+          `Welcome ${userCredential.user.displayName}`,
+          toastOptions
+        );
+      }
+    } catch (error) {
+      toast.error("Bad user credentials", toastOptions);
+    }
   }
   return (
     <div className="form-container">

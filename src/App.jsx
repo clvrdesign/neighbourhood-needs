@@ -6,6 +6,9 @@ import SignIn from "routes/SignIn.jsx";
 import SignUp from "routes/SignUp.jsx";
 import ForgotPassword from "routes/ForgotPassword.jsx";
 import Footer from "components/Footer.jsx";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "/src/styles.css";
 
 function App() {
   return (
@@ -21,6 +24,7 @@ function App() {
         </Routes>
         <Footer />
       </Router>
+      <ToastContainer/>
     </>
   );
 }

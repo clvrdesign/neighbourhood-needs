@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "/src/styles.css";
 import NeighbourhoodFilter from "components/NeighbourhoodFilter.jsx";
 import ProblemForm from "components/ProblemForm.jsx";
 import ProblemList from "components/ProblemList.jsx";
