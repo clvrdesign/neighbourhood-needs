@@ -12,6 +12,8 @@ function SignUp() {
     email: "",
     password: "",
   });
+  const { name, email, password } = formData;
+  const navigate = useNavigate();
 
   function onChange(event) {
     setFormData((prevestate) => ({
@@ -20,13 +22,29 @@ function SignUp() {
     }));
   }
 
-  const { name, email, password } = formData;
+  async function onSubmit(event) {
+    event.preventDefault();
+    try {
+      const auth = getAuth();
+      const userCredential = createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const { user } = userCredential;
+      updateProfile(auth.currentUser, { displayName: name });
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <div className="form-container">
       <header className="registration-header">
         <h1> Sign Up </h1>
       </header>
-      <form className="registration-form">
+      <form className="registration-form" onSubmit={onSubmit}>
         <input
           className="registration-form__input"
           type="text"
