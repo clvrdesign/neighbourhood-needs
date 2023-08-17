@@ -24,6 +24,7 @@ function ProblemForm() {
   const problemSelection = useRef(null);
 
   function handleProblemText(event) {
+    autosize(event)
     const contents = event.target.value;
     const input = event.target;
     setFormData((prevData) => ({

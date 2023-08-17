@@ -63,6 +63,7 @@ function SignUp() {
       const formDataCopy = { ...formData };
       delete formDataCopy.password;
       formDataCopy.dateRegistered = serverTimestamp();
+      formDataCopy.lastModified = serverTimestamp();
       formDataCopy.ipAddressRegistered = await fetchIpAddress();
       formDataCopy.isShadowBanned = false;
       formDataCopy.likedPost = [""];
