@@ -4,14 +4,18 @@ import { useNavigate } from "react-router-dom";
 import { ReactComponent as BirthdayCake } from "img/BirthdayCake.svg";
 import { ReactComponent as Clock } from "img/Clock.svg";
 import { ReactComponent as Location } from "img/Location.svg";
-import { timeAgo } from "src/utils/timeAgo.js";
+import { timeAgo } from "utils/timeAgo.js";
+import { getBadge } from "utils/getBadge.js";
 
 function Profile() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
-
+  const auth = getAuth();
+  function onLogout() {
+    auth.signOut();
+    navigate("/")
+  }
   useEffect(() => {
-    const auth = getAuth();
 
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -34,26 +38,35 @@ function Profile() {
   return user ? (
     <div className="profile-container">
       <header>
-        <div className="latest-badge">
-          <img src="https://placehold.co/128" alt="latest badge" />
+        <div className="badge-wrapper">
+          <div className="latest-badge" title="Rank">
+            <img src={getBadge(1).path} alt="latest badge" />
+          </div>
+          <p>{getBadge(1).name}</p>
         </div>
         <div className="profile-info">
           <h1 className="profile-info__heading">{user.name}</h1>
           <div className="profile-info__item">
-            <BirthdayCake width="18px" height="18px" fill={"#e2e8f0"} />
-            <p className="profile-info__text">member since {timeAgo(user.creationTime)}</p>
+            <BirthdayCake width="25px" height="25px" fill={"#e2e8f0"} />
+            <p className="profile-info__text">
+              Member since : {timeAgo(user.creationTime)}
+            </p>
           </div>
           <div className="profile-info__item">
-            <Clock width="18px" height="18px" fill={"#e2e8f0"} />
-            <p className="profile-info__text">last seen {timeAgo(user.lastSignInTime)}</p>
+            <Clock width="25px" height="25px" fill={"#e2e8f0"} />
+            <p className="profile-info__text">
+              Last seen : {timeAgo(user.lastSignInTime)}
+            </p>
           </div>
           <div className="profile-info__item">
-            <Location width="18px" height="18px" fill={"#e2e8f0"} />
-            <p className="profile-info__text">last seen {timeAgo(user.lastSignInTime)}</p>
+            <Location width="25px" height="25px" fill={"#e2e8f0"} />
+            <p className="profile-info__text">
+              Neighbourhood : {user.location ?? "Port of Spain"}
+            </p>
           </div>
         </div>
-        <div className="logout"></div>
-        <button> Log Out</button>
+
+        <button className="logout" onPointerDown={onLogout}> Log Out</button>
       </header>
       <section></section>
     </div>

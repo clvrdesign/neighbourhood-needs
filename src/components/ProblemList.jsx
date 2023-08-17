@@ -1,4 +1,4 @@
-import { getBadgePaths } from "utils/getBadgePaths.js";
+import { getBadge } from "utils/getBadge.js";
 import { ReactComponent as ThumbsUpIcon } from "img/ThumbsUp.svg";
 import { ReactComponent as ThumbsDownIcon } from "img/ThumbsDown.svg";
 import { ReactComponent as FlagIcon } from "img/Flag.svg";
@@ -25,15 +25,15 @@ function ProblemList() {
           <div className="post-metrics">
             <div className="vote-btns">
               <div className="vote-button-icon">
-                <ThumbsUpIcon fill="#ffbc6c"  />
+                <ThumbsUpIcon fill="#ffbc6c" />
                 <div className="vote-button-value">1.5K</div>
               </div>
               <div className="vote-button-icon">
-                <ThumbsDownIcon fill="#ffbc6c"  />
+                <ThumbsDownIcon fill="#ffbc6c" />
                 <div className="vote-button-value">1.5K</div>
               </div>
               <div className="vote-button-icon">
-                <FlagIcon fill="#9b0c18"  />
+                <FlagIcon fill="#9b0c18" />
                 <div className="vote-button-value">1.0K</div>
               </div>
             </div>
@@ -43,11 +43,7 @@ function ProblemList() {
               </div>
               <div className="report-author">
                 <div className="author-badge">
-                  <img
-                    src={getBadgePaths("newcomer")}
-                    alt=""
-                    title="author rank"
-                  />
+                  <img src={getBadge(1).path} alt="" title="author rank" />
                 </div>
                 <div className="author-name" title="author name">
                   M.Henry

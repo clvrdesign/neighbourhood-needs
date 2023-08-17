@@ -1,281 +1,283 @@
-@layer reset {
-  @import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700&family=Montserrat:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700&family=Montserrat:wght@400;700&display=swap");
 
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-  }
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
 
-  * {
-    margin: 0;
-    padding: 0;
-    font: inherit;
-  }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
-  :root {
-    /* let user system preferences decide */
-    color-scheme: light dark;
-    /* bootstrap colours */
-    --clr-bs-blue: #007bff;
-    --clr-bs-grey: #6c757d;
-    --clr-bs-success: #28a745;
-    --clr-bs-danger: #dc3545;
-    --clr-bs-warning: #ffc107;
-    --clr-bs-info: #17a2b8;
-    --clr-bs-disabled: #6c757d;
-    --clr-bs-light: #f8f9fa;
-    --clr-bs-dark: #343a40;
+* {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+}
 
-    /* colours I like ;) */
-    --clr-me-go: #2ecc71;
-    --clr-me-stop: #e74c3c;
-    --clr-me-dark-grey: #777;
-    --clr-me-white1: #f0f0f0;
-    --clr-me-white2: #f1f1f1;
-    --clr-me-sky: #3498db;
-    --clr-me-midnight: #212529;
-    --clr-me-sued: #242333;
-    --clr-me-desktop-grey: #d4d4d4;
+:root {
+  /* let user system preferences decide */
+  color-scheme: light dark;
+  /* bootstrap colours */
+  --clr-bs-blue: #007bff;
+  --clr-bs-grey: #6c757d;
+  --clr-bs-success: #28a745;
+  --clr-bs-danger: #dc3545;
+  --clr-bs-warning: #ffc107;
+  --clr-bs-info: #17a2b8;
+  --clr-bs-disabled: #6c757d;
+  --clr-bs-light: #f8f9fa;
+  --clr-bs-dark: #343a40;
 
-    /*  Main Theme for given project */
-    --clr-primary: #ce0007;
-    --clr-secondary: #ffff12;
-    --clr-accent1: #93e5ab;
-    --clr-accent2: #7fdeff;
-    --clr-pnm: #ef4444;
-    --clr-unc: #eab308;
-    --clr-pnm-unc: linear-gradient(
-      130deg,
-      rgba(239, 68, 68, 1) 0%,
-      rgba(234, 179, 8, 1) 100%
-    );
+  /* colours I like ;) */
+  --clr-me-go: #2ecc71;
+  --clr-me-stop: #e74c3c;
+  --clr-me-dark-grey: #777;
+  --clr-me-white1: #f0f0f0;
+  --clr-me-white2: #f1f1f1;
+  --clr-me-sky: #3498db;
+  --clr-me-midnight: #212529;
+  --clr-me-sued: #242333;
+  --clr-me-desktop-grey: #d4d4d4;
 
-    /* Themed gradient */
-    --clr-gradient: linear-gradient(
-      -90deg,
-      var(--clr-primary),
-      var(--clr-secondary)
-    );
-    --glow-gradient: radial-gradient(
-      var(--clr-secondary) 50%,
-      var(--clr-me-white1)
-    );
+  /*  Main Theme for given project */
+  --clr-primary: #ce0007;
+  --clr-secondary: #ffff12;
+  --clr-accent1: #93e5ab;
+  --clr-accent2: #7fdeff;
+  --clr-pnm: #ef4444;
+  --clr-unc: #eab308;
+  --clr-pnm-unc: linear-gradient(
+    130deg,
+    rgba(239, 68, 68, 1) 0%,
+    rgba(234, 179, 8, 1) 100%
+  );
 
-    /* Default fonts */
-    --ff-title: "Barlow Condensed", sans-serif;
-    --ff-body: "Montserrat", sans-serif;
-    --fw-body: 400;
-    --fw-bold: 700;
+  /* Themed gradient */
+  --clr-gradient: linear-gradient(
+    -90deg,
+    var(--clr-primary),
+    var(--clr-secondary)
+  );
+  --glow-gradient: radial-gradient(
+    var(--clr-secondary) 50%,
+    var(--clr-me-white1)
+  );
 
-    --base-size: 1rem;
-    --scale: 1.25;
-    --h1: calc(var(--h2) * var(--scale));
-    --h2: calc(var(--h3) * var(--scale));
-    --h3: calc(var(--h4) * var(--scale));
-    --h4: calc(var(--h5) * var(--scale));
-    --h5: calc(var(--h6) * var(--scale));
-    --h6: var(--base-size);
+  /* Default fonts */
+  --ff-title: "Barlow Condensed", sans-serif;
+  --ff-body: "Montserrat", sans-serif;
+  --ff-third: "Bebas Neue", sans-serif;
 
-    --fw-300: 300;
-    --fw-400: 400;
-    --fw-700: 700;
+  --fw-body: 400;
+  --fw-bold: 700;
 
-    --box-shadow-0: 0 4px 8px 0 rgba(0, 0, 0, 1);
-    --box-shadow-1: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    --box-shadow-2: 0 5px 0 0 rgba(0, 0, 0, 0.2);
-    --text-shadow-1: 2px 3px 5px rgba(0, 0, 0, 0.5);
-    --text-shadow-2: 1px 1px 1px #303030;
-  }
+  --base-size: 1rem;
+  --scale: 1.25;
+  --h1: calc(var(--h2) * var(--scale));
+  --h2: calc(var(--h3) * var(--scale));
+  --h3: calc(var(--h4) * var(--scale));
+  --h4: calc(var(--h5) * var(--scale));
+  --h5: calc(var(--h6) * var(--scale));
+  --h6: var(--base-size);
 
-  body,
-  html {
-    overflow-x: hidden;
-  }
-  main {
-    width: min(65ch, 100% - 4rem);
-    margin-inline: auto;
-  }
-  html {
-    color-scheme: dark light;
-    scroll-behavior: smooth;
-    text-rendering: optimizeSpeed;
-    line-height: 1.5;
-  }
+  --fw-300: 300;
+  --fw-400: 400;
+  --fw-700: 700;
 
-  .container {
-    min-height: 100vh;
-    padding: 30px;
-    margin-bottom: 85px !important;
-  }
-  .form-container {
-    margin: 0 auto !important;
-    padding: 30px;
-    padding-top: 15px;
-    margin-bottom: 85px !important;
-    width: 100%;
-  }
-  .registration-form {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    /* padding: 0 3rem; */
-    height: 100%;
-    text-align: center;
-    gap: 1rem;
-  }
+  --box-shadow-0: 0 4px 8px 0 rgba(0, 0, 0, 1);
+  --box-shadow-1: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  --box-shadow-2: 0 5px 0 0 rgba(0, 0, 0, 0.2);
+  --text-shadow-1: 2px 3px 5px rgba(0, 0, 0, 0.5);
+  --text-shadow-2: 1px 1px 1px #303030;
+}
 
-  .registration-form__input {
-    padding: 1rem;
-    font-size: var(--h6);
-    background-color: #64748b;
-    border-radius: 1rem;
-    width: 100%;
-    box-shadow: var(--box-shadow-2);
-  }
+body,
+html {
+  overflow-x: hidden;
+}
+main {
+  width: min(65ch, 100% - 4rem);
+  margin-inline: auto;
+}
+html {
+  color-scheme: dark light;
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
 
-  /*
+.container {
+  min-height: 100vh;
+  padding: 30px;
+  margin-bottom: 85px !important;
+}
+.form-container {
+  margin: 0 auto !important;
+  padding: 30px;
+  padding-top: 15px;
+  margin-bottom: 85px !important;
+  width: 100%;
+}
+.registration-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  /* padding: 0 3rem; */
+  height: 100%;
+  text-align: center;
+  gap: 1rem;
+}
+
+.registration-form__input {
+  padding: 1rem;
+  font-size: var(--h6);
+  background-color: #64748b;
+  border-radius: 1rem;
+  width: 100%;
+  box-shadow: var(--box-shadow-2);
+}
+
+/*
 p,article,summary{
 
 width:clamp(45ch,50ch,75ch);
 font-size: var(--fs-0);
 }
 */
-  blockquote,
-  body,
-  h1,
-  h2,
-  h3,
-  h4,
-  li,
-  figure,
-  blockquote,
-  dl,
-  dd,
-  ol[class],
-  p,
-  ul,
-  [class] {
-    margin: 0;
+blockquote,
+body,
+h1,
+h2,
+h3,
+h4,
+li,
+figure,
+blockquote,
+dl,
+dd,
+ol[class],
+p,
+ul,
+[class] {
+  margin: 0;
+}
+
+/* headings */
+h1 {
+  font-size: var(--h1);
+}
+
+h2 {
+  font-size: var(--h2);
+}
+
+h3 {
+  font-size: var(--h3);
+}
+
+h4 {
+  font-size: var(--h4);
+}
+
+h5 {
+  font-size: var(--h5);
+}
+
+h6 {
+  font-size: var(--h6);
+}
+
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+ol[class],
+ul[class],
+ol[role="list"] ul[role="list"] {
+  list-style: none;
+  list-style-type: none;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+::-moz-focus-inner {
+  border: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  border: none;
+  font: inherit;
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
   }
 
-  /* headings */
-  h1 {
-    font-size: var(--h1);
+  *,
+  *::before,
+  *::after {
+    /* animation-duration: 0.01ms !important; */
+    /* animation-iteration-count: 1 !important; */
+    /* transition-duration: 0.01ms !important; */
+    scroll-behavior: auto !important;
   }
+}
 
-  h2 {
-    font-size: var(--h2);
-  }
+/* Credit: Non-modified version by Andy Bell's found here: https://archive.is/wip/x5Zf8  */
 
-  h3 {
-    font-size: var(--h3);
-  }
+.hero {
+  width: 100%;
+  height: 95vh;
+  background-image: linear-gradient(
+      to right bottom,
+      rgba(126, 213, 111, 0.8),
+      rgba(40, 180, 131, 0.8)
+    ),
+    url(./assets/img/trinidad-and-tobago-hor.jpg);
+  background-size: cover;
+  background-position: top;
+  clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+}
 
-  h4 {
-    font-size: var(--h4);
-  }
+.logo {
+  width: 16rem;
+  position: relative;
+  cursor: pointer;
+  filter: drop-shadow(2px 4px 6px black);
+  transition: all 0.5s ease;
+}
+.logo:hover {
+  scale: 1.09;
+  filter: invert() drop-shadow(0 0 2em rgba(97, 225, 251, 0.667));
+}
 
-  h5 {
-    font-size: var(--h5);
-  }
-
-  h6 {
-    font-size: var(--h6);
-  }
-
-  img,
-  picture,
-  svg,
-  video {
-    display: block;
-    max-width: 100%;
-    height: auto;
-  }
-
-  ol[class],
-  ul[class],
-  ol[role="list"] ul[role="list"] {
-    list-style: none;
-    list-style-type: none;
-    padding: 0;
-  }
-
-  a {
-    text-decoration: none;
-  }
-
-  /* A elements that don't have a class get default styles */
-  a:not([class]) {
-    text-decoration-skip-ink: auto;
-  }
-
-  ::-moz-focus-inner {
-    border: 0;
-  }
-
-  button,
-  input,
-  select,
-  textarea {
-    border: none;
-    font: inherit;
-  }
-
-  /* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
-  @media (prefers-reduced-motion: reduce) {
-    html:focus-within {
-      scroll-behavior: auto;
-    }
-
-    *,
-    *::before,
-    *::after {
-      /* animation-duration: 0.01ms !important; */
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-      scroll-behavior: auto !important;
-    }
-  }
-
-  /* Credit: Non-modified version by Andy Bell's found here: https://archive.is/wip/x5Zf8  */
-
-  .hero {
-    width: 100%;
-    height: 95vh;
-    background-image: linear-gradient(
-        to right bottom,
-        rgba(126, 213, 111, 0.8),
-        rgba(40, 180, 131, 0.8)
-      ),
-      url(./assets/img/trinidad-and-tobago-hor.jpg);
-    background-size: cover;
-    background-position: top;
-    clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
-  }
-
-  .logo {
-    width: 16rem;
-    position: relative;
-    cursor: pointer;
-    filter: drop-shadow(2px 4px 6px black);
-    transition: all 0.5s ease;
-  }
-  .logo:hover {
-    scale: 1.09;
-    filter: invert() drop-shadow(0 0 2em rgba(97, 225, 251, 0.667));
-  }
-
-  .main-heading {
-    color: white;
-    text-align: center;
-    font-family: var(--ff-title);
-    font-weight: var(--fw-bold);
-    text-transform: uppercase;
-    text-shadow: 0px 4px 3px rgba(0, 0, 0, 0.4), 0px 8px 13px rgba(0, 0, 0, 0.1),
-      0px 18px 23px rgba(0, 0, 0, 0.1);
-  }
+.main-heading {
+  color: white;
+  text-align: center;
+  font-family: var(--ff-title);
+  font-weight: var(--fw-bold);
+  text-transform: uppercase;
+  text-shadow: 0px 4px 3px rgba(0, 0, 0, 0.4), 0px 8px 13px rgba(0, 0, 0, 0.1),
+    0px 18px 23px rgba(0, 0, 0, 0.1);
 }
 
 body {
@@ -290,6 +292,7 @@ header {
   align-items: center;
   text-align: center;
 }
+
 header h1 {
   background: #e2e8f0;
   -webkit-background-clip: text;
@@ -344,7 +347,7 @@ header h1 {
   width: 45%;
 }
 
-textarea {
+.problem-form textarea {
   min-height: 152px;
   height: 152px;
   resize: none;
@@ -414,12 +417,38 @@ aside {
   border-radius: 0.5rem;
   padding: 1rem;
 }
-.neighbourhood-list {
+ul.neighbourhood-list {
   overflow-y: scroll;
   max-height: 24rem;
   border-top: 2px solid #64748b;
   padding-top: 1rem;
 }
+
+.neighbourhood-list::-webkit-scrollbar,
+.neighbourhood-select::-webkit-scrollbar {
+  width: 12px;
+}
+
+.neighbourhood-list::-webkit-scrollbar-track,
+.neighbourhood-select::-webkit-scrollbar-track {
+  margin-top: 1rem;
+  border-radius: 8px;
+  background-color: #e2e8f0;
+  border: 1px solid #cacaca;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.neighbourhood-list::-webkit-scrollbar-thumb,
+.neighbourhood-select::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: #1c2637;
+  min-height: 50px;
+}
+
+.neighbourhood-list li {
+  padding-right: 1rem;
+}
+
 .neighbourhood-list li button {
   padding: 1rem;
   font-size: var(--h6);
@@ -486,12 +515,12 @@ option:first-child {
 
 summary {
   text-shadow: var(--text-shadow-1);
-  font-weight: 600;
   text-align: center;
   text-transform: uppercase;
   font-weight: bold;
   cursor: pointer;
   padding: 1rem;
+  font-size: 0.9rem;
 }
 
 .problems {
@@ -517,7 +546,7 @@ sup {
   font-weight: bold;
   position: absolute;
   top: 5%;
-  right: 20%;
+  right: 10%;
 }
 .tag {
   padding: 1rem;
@@ -779,52 +808,104 @@ footer li p {
   align-items: flex-start;
   padding: 3rem;
 }
-.profile-container header h1{
-  font-size: 2rem;
+.profile-container header h1 {
+  font-size: 1.9rem;
   text-transform: capitalize;
 }
 
-.profile-container header button {
+.logout {
   padding: 1rem;
   font-size: var(--h6);
   background-color: #64748b;
   border-radius: 1rem;
-  width: 45%;
+  width: 100%;
   box-shadow: var(--box-shadow-2);
 
   text-shadow: var(--text-shadow-1);
 }
+.badge-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+  align-items: center;
+  text-transform: capitalize;
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: var(--ff-body);
+  padding: 0.5rem;
+}
 
-.profile-info{
+.badge-wrapper p {
+  font-family: var(--ff-third);
+  color: #17a2b8;
+  text-shadow: var(--text-shadow-1);
+  font-size: 1.5rem;
+  padding-left: 1rem;
+  letter-spacing: 0.0625rem;
+}
+.latest-badge {
+  width: 128px;
+  filter: drop-shadow(0px 0px 3px rgba(224, 219, 123, 0.902));
+  animation: glow 1s infinite alternate ease-in-out;
+  will-change: filter;
+}
+
+@keyframes glow {
+  from {
+    filter: drop-shadow(0px 0px -17px rgba(224, 219, 123, 0.902));
+  }
+  to {
+    filter: drop-shadow(0px 0px 7px rgba(224, 219, 123, 0.902));
+  }
+}
+.profile-info {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin-bottom: 1rem;
 }
-.profile-info__heading{
+.profile-info__heading {
   margin-top: 1rem;
 }
 
-.profile-info__item{
+.profile-info__item {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
+  gap: 0.4rem;
+  padding-top: 10px;
 }
 
-.profile-info__text{
-  font-size: .8rem;
-  margin-left: .6rem;
-  text-transform: capitalize;
+.profile-info__text {
+  font-size: 0.8rem;
+  text-shadow: var(--text-shadow-1);
 }
-/* *{outline:2px solid tomato;} */
-.signUp-select{
+.signUp-select {
   width: 100%;
 }
 
 @media only screen and (min-width: 1200px) {
-
-  .signUp-select{
-     width: 25%;
+  .logout {
+    width: 15%;
+    cursor: pointer;
+  }
+  .profile-container header {
+    flex-direction: column;
+  }
+  .profile-info__heading {
+    margin-left: 0px;
+    padding-left: 0px;
+  }
+  .badge-wrapper p {
+    margin-right: auto;
+    margin-left: 5%;
+    font-size: 3rem;
+    border-top: 2px solid #eee;
+    border-bottom: 2px solid #eee;
+  }
+  .signUp-select {
+    width: 25%;
   }
   fieldset {
     width: 25%;
@@ -837,7 +918,9 @@ footer li p {
 
     text-shadow: var(--text-shadow-1);
   }
-
+  sup {
+    right: 28%;
+  }
   textarea {
     resize: none;
     /* overflow: hidden; */
@@ -869,7 +952,7 @@ footer li p {
   }
 
   .form-toggle {
-    flex: 1 1 14%;
+    flex: 0 1 14%;
   }
 
   .problem-form {
@@ -934,7 +1017,7 @@ footer li p {
     flex-direction: row;
     align-items: center;
     position: relative;
-    /* text-align: end; */
+    justify-content: space-between;
   }
 
   header h1 {

@@ -69,6 +69,7 @@ function SignUp() {
       formDataCopy.silverBadgesCount = 0;
       formDataCopy.bronzeBadgesCount = 0;
       formDataCopy.goldBadgesCount = 0;
+      formDataCopy.rank = 1;
       formDataCopy.location = location;
       formDataCopy.fingerprintRegistered = await generateGuestFingerprint();
       //set local fingerprint encrypting with user key
