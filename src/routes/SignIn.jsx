@@ -77,6 +77,9 @@ function SignIn() {
           autoComplete="on"
           placeholder="enter password"
         />
+        <Link className="forgot-password-link" to="/forgot-password">
+          Forgot Password
+        </Link>
 
         <button className="registration-form__signUpBtn">Sign In</button>
       </form>

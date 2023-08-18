@@ -316,6 +316,10 @@ header h1 {
   position: relative;
   top: 1.25rem;
 }
+/* *{outline:1px solid tomato;} */
+.forgot-password-link{
+  align-self: flex-start;
+}
 .problem-form {
   display: flex;
   flex-direction: column;
