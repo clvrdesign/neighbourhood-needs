@@ -317,7 +317,7 @@ header h1 {
   top: 1.25rem;
 }
 /* *{outline:1px solid tomato;} */
-.forgot-password-link{
+.forgot-password-link {
   align-self: flex-start;
 }
 .problem-form {
@@ -337,6 +337,7 @@ header h1 {
 .neighbourhood-select,
 .post-btn,
 .registration-form__signUpBtn,
+.forgot-form__signUpBtn,
 .form-toggle {
   padding: 1rem;
   font-size: var(--h6);
@@ -346,6 +347,12 @@ header h1 {
   box-shadow: var(--box-shadow-2);
 
   text-shadow: var(--text-shadow-1);
+}
+
+.forgot-form__signUpBtn {
+  width: 35%;
+  padding: 0.2rem 0.1rem;
+  margin-top: 1rem;
 }
 
 .registration-form__signUpBtn {
@@ -377,14 +384,16 @@ header h1 {
 
 .post-btn,
 .form-toggle,
-.registration-form__signUpBtn {
+.registration-form__signUpBtn,
+.forgot-form__signUpBtn {
   cursor: pointer;
   transition: 0.3s ease;
 
   text-shadow: var(--text-shadow-1);
 }
 .form-toggle:hover,
-.registration-form__signUpBtn:hover {
+.registration-form__signUpBtn:hover,
+.forgot-form__signUpBtn:hover {
   background-color: #64748b;
   scale: 0.95;
 }
@@ -938,11 +947,14 @@ footer li p {
   .registration-form__input {
     width: 25%;
   }
-  .registration-form__signUpBtn {
+  .registration-form__signUpBtn,
+  .forgot-form__signUpBtn {
     width: 8%;
 
     text-shadow: var(--text-shadow-1);
   }
+
+ 
   sup {
     right: 28%;
   }
