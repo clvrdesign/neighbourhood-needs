@@ -912,6 +912,10 @@ footer li p {
 }
 
 @media only screen and (min-width: 1200px) {
+  .forgot-password-link {
+    align-self: center;
+  }
+
   .nav-list {
     justify-content: space-evenly;
   }
@@ -954,7 +958,6 @@ footer li p {
     text-shadow: var(--text-shadow-1);
   }
 
- 
   sup {
     right: 28%;
   }
