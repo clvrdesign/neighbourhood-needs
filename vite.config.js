@@ -19,5 +19,6 @@ export default defineConfig({
     port: 8080,
   },
 })
-console.log(namesOfPaths);
+// console.log(namesOfPaths);
+
 

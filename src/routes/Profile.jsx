@@ -13,10 +13,9 @@ function Profile() {
   const auth = getAuth();
   function onLogout() {
     auth.signOut();
-    navigate("/")
+    navigate("/");
   }
   useEffect(() => {
-
     onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is signed in.
@@ -29,7 +28,7 @@ function Profile() {
         });
       } else {
         // User is not signed in.
-        navigate("/sign-in");
+        // navigate("/sign-in");
         // ...
       }
     });
@@ -66,7 +65,10 @@ function Profile() {
           </div>
         </div>
 
-        <button className="logout" onPointerDown={onLogout}> Log Out</button>
+        <button className="logout" onPointerDown={onLogout}>
+          {" "}
+          Log Out
+        </button>
       </header>
       <section></section>
     </div>

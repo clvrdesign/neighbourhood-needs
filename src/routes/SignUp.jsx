@@ -38,7 +38,7 @@ function SignUp() {
   function onChange(event) {
     setFormData((prevestate) => ({
       ...prevestate,
-      [event.target.id]: event.target.value,
+      [event.target.name]: event.target.value,
     }));
   }
   function handleSignature(event) {
@@ -96,6 +96,7 @@ function SignUp() {
           type="text"
           title="name"
           id="name"
+          name="name"
           value={name}
           onChange={onChange}
           required
@@ -106,6 +107,7 @@ function SignUp() {
           type="email"
           title="email"
           id="email"
+          name="email"
           value={email}
           onChange={onChange}
           required
@@ -116,11 +118,13 @@ function SignUp() {
           type="password"
           title="password"
           id="password"
+          name="password"
           value={password}
           onChange={onChange}
           required
           minLength={8}
           maxLength={32}
+          autoComplete="on"
           placeholder="Enter password"
         />
 
@@ -129,6 +133,7 @@ function SignUp() {
             className="neighbourhood-select"
             value={location}
             id="location"
+            name="location"
             onChange={onChange}
             required
           >
@@ -147,8 +152,8 @@ function SignUp() {
             className="fieldset_input"
             type="radio"
             title="signature style"
-            id="signature"
-            name="signatureStyle"
+            id="signature1"
+            name="signature"
             value={transformName(name)}
             onChange={onChange}
             required
@@ -162,8 +167,8 @@ function SignUp() {
             className="fieldset_input"
             type="radio"
             title="signature style"
-            name="signatureStyle"
-            id="signature"
+            name="signature"
+            id="signature2"
             value={getInitials(name)}
             onChange={onChange}
             required

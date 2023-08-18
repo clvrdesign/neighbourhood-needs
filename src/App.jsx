@@ -6,6 +6,7 @@ import SignIn from "routes/SignIn.jsx";
 import SignUp from "routes/SignUp.jsx";
 import ForgotPassword from "routes/ForgotPassword.jsx";
 import Footer from "components/Footer.jsx";
+import PrivateRoute from "routes/PrivateRoute.jsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "/src/styles.css";
@@ -17,14 +18,16 @@ function App() {
         <Routes>
           <Route path="/" element={<Explore />} />
           <Route path="/about" element={<About />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile" element={<PrivateRoute />}>
+            <Route path="/profile" element={<Profile />} />
+          </Route>
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
         </Routes>
         <Footer />
       </Router>
-      <ToastContainer/>
+      <ToastContainer />
     </>
   );
 }

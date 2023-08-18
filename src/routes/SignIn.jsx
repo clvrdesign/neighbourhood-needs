@@ -74,6 +74,7 @@ function SignIn() {
           required
           minLength={8}
           maxLength={32}
+          autoComplete="on"
           placeholder="enter password"
         />
 
