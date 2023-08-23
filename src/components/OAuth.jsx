@@ -28,7 +28,6 @@ function OAuth() {
         await setDoc(doc(db, "users", user.uid), {
           name: user.displayName,
           email: user.email,
-          //allow user to change signature in profile ONCE
           signature: transformName(user.displayName),
           dateRegistered: serverTimestamp(),
           lastModified: serverTimestamp(),
@@ -40,8 +39,7 @@ function OAuth() {
           goldBadgesCount: 0,
           rank: 1,
           fingerprintRegistered: await generateGuestFingerprint(),
-          //allow user to change location in profile ONCE
-          location: location,
+          location: "",
           key: await subtleSecurity.constructor("rotateKey")(),
         });
       }

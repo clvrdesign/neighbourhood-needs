@@ -139,8 +139,8 @@ function SignUp() {
           </select>
         </div>
 
-        <fieldset>
-          <legend>Select signature</legend>
+        <fieldset className="registration-form__fieldset">
+          <legend className="registration-form__legend">Select signature</legend>
           <input
             className="fieldset_input"
             type="radio"
@@ -173,7 +173,7 @@ function SignUp() {
 
         <div className="signup-btns">
           <button className="registration-form__signUpBtn">Sign Up</button>
-        <OAuth/>
+          <OAuth />
         </div>
       </form>
       <Link className="registration-link" to="/sign-in">
