@@ -60,7 +60,7 @@ function Profile() {
           <div className="profile-info__item">
             <Location width="25px" height="25px" fill={"#e2e8f0"} />
             <p className="profile-info__text">
-              Neighbourhood : {user.location ?? "Port of Spain"}
+              Neighbourhood : {user.location ?? "please add location"}
             </p>
           </div>
         </div>

@@ -2,20 +2,10 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import { toastOptions } from "utils/toastOptions.js";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
-
-  const toastOptions = {
-    position: "top-right",
-    autoClose: 1500,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "light",
-  };
 
   function onChange(event) {
     setEmail(event.target.value);
@@ -28,7 +18,7 @@ function ForgotPassword() {
       await sendPasswordResetEmail(auth, email);
       toast.success("Reset link sent!");
     } catch (error) {
-      toast.error("Could not reset email");
+      toast.error("Could not reset email",toastOptions);
     }
   }
 

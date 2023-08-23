@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { toast } from "react-toastify";
+import OAuth from 'components/Oauth.jsx'
 function SignIn() {
   const [formData, setFormData] = useState({
     email: "",
@@ -81,7 +82,10 @@ function SignIn() {
           Forgot Password
         </Link>
 
-        <button className="registration-form__signUpBtn">Sign In</button>
+        <div className="signup-btns">
+          <button className="registration-form__signUpBtn">Sign In</button>
+          <OAuth />
+        </div>
       </form>
       <Link className="registration-link" to="/sign-up">
         Sign up Instead

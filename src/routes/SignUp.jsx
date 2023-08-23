@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import OAuth from "components/Oauth.jsx";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -14,6 +15,7 @@ import { fetchIpAddress } from "src/utils/fetchIpAddress.js";
 import { toast } from "react-toastify";
 import { sortedNeighbourhoods } from "src/utils/extractNeighbourhoods.js";
 import { generateGuestFingerprint } from "src/utils/generateGuestFingerprint.js";
+import { toastOptions } from "utils/toastOptions.js";
 function SignUp() {
   const [formData, setFormData] = useState({
     name: "",
@@ -24,16 +26,7 @@ function SignUp() {
   });
   const { name, email, password, location, signature } = formData;
   const navigate = useNavigate();
-  const toastOptions = {
-    position: "top-right",
-    autoClose: 1500,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "light",
-  };
+
 
   function onChange(event) {
     setFormData((prevestate) => ({
@@ -178,7 +171,10 @@ function SignUp() {
           </label>
         </fieldset>
 
-        <button className="registration-form__signUpBtn">Sign Up</button>
+        <div className="signup-btns">
+          <button className="registration-form__signUpBtn">Sign Up</button>
+        <OAuth/>
+        </div>
       </form>
       <Link className="registration-link" to="/sign-in">
         Sign in Instead
