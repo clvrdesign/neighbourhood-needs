@@ -11,8 +11,9 @@ const security = (function () {
   // const cache = {feather:"fly"};
   let cipher;
   let iv;
+  const DEFAULT_KEY = "acaRroIrqyP0iL_Kuja3v6Qkb8lE_gT4XxI6f4x86L8";
 
-  async function importKey(key) {
+  async function importKey(key = DEFAULT_KEY) {
     cache.yourKey = await window.crypto.subtle.importKey(
       "jwk",
       {
@@ -57,8 +58,8 @@ const security = (function () {
     return cache.yourKey;
   }
   async function rotateKey() {
-      cache.yourKey = await generateKey();
-      const newKey = await exportKey();
+    cache.yourKey = await generateKey();
+    const newKey = await exportKey();
     return newKey;
   }
 
@@ -92,7 +93,7 @@ const security = (function () {
   }
 
   async function encrypt(data) {
-try {
+    try {
       const key = cache.yourKey;
       const encoded = encode(data);
       iv = generateIv();
@@ -104,9 +105,9 @@ try {
         key,
         encoded
       );
-} catch (error) {
-  console.error("Error in encryption module")
-}
+    } catch (error) {
+      console.error("Error in encryption module");
+    }
 
     return this;
   }
@@ -152,7 +153,9 @@ try {
       );
       return decryptedData;
     } catch (error) {
-      console.error("Decryption Error, most likely key not generated or unmatched");
+      console.error(
+        "Decryption Error, most likely key not generated or unmatched"
+      );
     }
   }
   const cache = {
@@ -174,9 +177,6 @@ try {
     }
   };
 })();
-
-
-
 
 const subtleSecurity = new security();
 

@@ -13,6 +13,7 @@ function OAuth() {
   const navigate = useNavigate();
 
   async function handleGoogleAuth(event) {
+    event.preventDefault();
     try {
       const auth = getAuth();
       const provider = new GoogleAuthProvider();
@@ -40,6 +41,7 @@ function OAuth() {
           rank: 1,
           fingerprintRegistered: await generateGuestFingerprint(),
           location: "",
+          profileLastUpdated: null,
           key: await subtleSecurity.constructor("rotateKey")(),
         });
       }

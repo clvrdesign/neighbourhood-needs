@@ -3,8 +3,8 @@ import { fetchIpAddress } from "./fetchIpAddress.js";
 import { subtleSecurity } from "utils/subtleSecurity.js";
 export async function collectUserData() {
   // simulate user auth and assigned a key
-  const USER_KEY = "acaRroIrqyP0iL_Kuja3v6Qkb8lE_gT4XxI6f4x86L8";
-  await subtleSecurity.constructor("importKey")(USER_KEY);
+  // const USER_KEY = "acaRroIrqyP0iL_Kuja3v6Qkb8lE_gT4XxI6f4x86L8";
+  await subtleSecurity.constructor("importKey")();
   subtleSecurity.constructor("getLocalStorage")("NNGID");
   return {
     userID: await subtleSecurity.constructor("getLocalStorage")("NNGID"),

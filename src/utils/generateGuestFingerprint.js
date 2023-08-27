@@ -2,12 +2,12 @@ import { getCurrentBrowserFingerPrint } from "@clickwithclark/broprint.js/lib/UM
 import { subtleSecurity } from "utils/subtleSecurity";
 
 // simulate user auth and assigned a key
-const USER_KEY = "acaRroIrqyP0iL_Kuja3v6Qkb8lE_gT4XxI6f4x86L8";
+// const USER_KEY = "acaRroIrqyP0iL_Kuja3v6Qkb8lE_gT4XxI6f4x86L8";
 export async function generateGuestFingerprint() {
   //generate a key for new user
 
   //skip keygen for test faze, use USER_KEY
-  await subtleSecurity.constructor("importKey")(USER_KEY);
+  await subtleSecurity.constructor("importKey")();
 
   const currentFingerprint = await getCurrentBrowserFingerPrint();
 

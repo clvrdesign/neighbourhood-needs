@@ -1037,7 +1037,7 @@ footer li p {
   }
   .registration-link {
     position: relative;
-    top: -25px;
+    /* top: -25px; */
   }
 
   .logout {

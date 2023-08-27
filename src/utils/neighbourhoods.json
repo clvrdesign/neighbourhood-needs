@@ -136,7 +136,7 @@
   { "neighbourhood": "Hardbargain", "region": "Princes Town region" },
   { "neighbourhood": "Hindustan", "region": "Princes Town region" },
   { "neighbourhood": "Hope", "region": "Tobago" },
-  { "neighbourhood": "Icacos", "region": "Siparia region" },
+  { "neighbourhood": "Icacos", "region": "Siparia region " },
   { "neighbourhood": "Iere Village", "region": "Princes Town region" },
   { "neighbourhood": "Indian Chain", "region": "Couva-Tabaquite-Talparo" },
   { "neighbourhood": "Indian Walk", "region": "Princes Town region" },
@@ -152,6 +152,7 @@
   { "neighbourhood": "La Brea", "region": "Siparia region" },
   { "neighbourhood": "La Canoa", "region": "San Juan–Laventille" },
   { "neighbourhood": "La Horquetta", "region": "Tunapuna–Piarco" },
+  { "neighbourhood": "Lange Park", "region": "Borough of Chaguanas" },
   { "neighbourhood": "La Paille", "region": "Tunapuna-Piarco" },
   { "neighbourhood": "La Romaine", "region": "City of San Fernando" },
   {

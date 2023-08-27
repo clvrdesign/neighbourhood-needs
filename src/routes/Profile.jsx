@@ -24,60 +24,124 @@ import {
   getDocFromCache,
   startAfter,
   getDocFromServer,
+  Timestamp,
+  updateDoc,
+  serverTimestamp,
 } from "firebase/firestore";
 import { db } from "src/firebase.config.js";
 import Spinner from "components/Spinner.jsx";
+import { isMonthsAgo } from "src/utils/monthsAgo.js";
+import { getDateXDaysFromNow } from "src/utils/getDateXDaysFromNow.js";
+import { dateInSeconds } from "src/utils/dateInSeconds.js";
 
 function Profile() {
   const [user, setUser] = useState({
     location: "",
     signature: "",
   });
+
+  const [authInfo, setAuthInfo] = useState({
+    name: "",
+    id: "",
+    email: "",
+    lastSignInTime: "",
+    creationTime: "",
+  });
   const [changeDetails, setChangeDetails] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  // const { location, signature } = user;
   const navigate = useNavigate();
   const auth = getAuth();
-
   const formRef = useRef(null);
+  let locationSelect;
+  let SingleInitialInput;
+  let fDoubleInitialInput;
+  if (formRef.current != null) {
+    locationSelect = formRef.current[1];
+    SingleInitialInput = formRef.current[2];
+    fDoubleInitialInput = formRef.current[3];
+  }
 
   function onChange(event) {
     setUser((prevestate) => ({
       ...prevestate,
       [event.target.name]: event.target.value,
     }));
-    formRef.current[1].setCustomValidity("");
-    formRef.current[2].setCustomValidity("");
+    locationSelect.setCustomValidity("");
+    SingleInitialInput.setCustomValidity("");
   }
   async function handleSubmit(event) {
     try {
-      if (formRef.current[1].value.length === 0) {
+      if (locationSelect.value.length === 0) {
         setChangeDetails(false);
 
-        formRef.current[1].setCustomValidity("You must choose a location.");
-        return formRef.current[1].reportValidity();
+        locationSelect.setCustomValidity("You must choose a location.");
+        return locationSelect.reportValidity();
       }
 
-      if (!formRef.current[2].checked && !formRef.current[3].checked) {
+      if (!SingleInitialInput.checked && !fDoubleInitialInput.checked) {
         setChangeDetails(false);
-        formRef.current[2].setCustomValidity("You must choose a signature.");
-        return formRef.current[2].reportValidity();
+        SingleInitialInput.setCustomValidity("You must choose a signature.");
+        return SingleInitialInput.reportValidity();
       }
 
-      if (user?.location && user?.signature) {
-        formRef.current[1].setCustomValidity("");
-        formRef.current[2].setCustomValidity("");
+      if (user.location && user.signature) {
+        const userRef = doc(db, "users", authInfo.id);
+        locationSelect.setCustomValidity("");
+        SingleInitialInput.setCustomValidity("");
         setChangeDetails(true);
+        const updatedUser = {
+          ...user,
+          lastModified: serverTimestamp(),
+          profileLastUpdated: serverTimestamp(),
+        };
+        // const updatedUser = {
+        //   ...user,
+        //   profileLastUpdated: Timestamp.fromDate(new Date()), // mock for testing
+        //   lastModified: Timestamp.fromDate(new Date()), // mock for testing
+        // };
+        //save to DB
+        setUser(updatedUser);
+        updateDoc(userRef, updatedUser);
+        toast.success("Profile updated", toastOptions);
       }
     } catch (error) {
       toast.error("Could not update", toastOptions);
     }
   }
-  function handleChangeClick(event) {
+
+  function updateLocationAndSignature(event) {
+    /**Since using the same button to update and save
+     * when changeDetails = true, the user is trying to
+     * save since it is false by default
+     */
+
     changeDetails && handleSubmit(event);
     setChangeDetails((prevestate) => !prevestate);
   }
+  function handleChangeClick(event) {
+    const { profileLastUpdated } = user;
+    const twoMonthsAgo = isMonthsAgo(new Date(profileLastUpdated?.seconds), 2);
+    const isfirstUpdate = profileLastUpdated == null;
+
+    if (!isfirstUpdate && !twoMonthsAgo) {
+      return alert(
+        "You can only update your location & signature once every 2 months!"
+      );
+    }
+    if (!isfirstUpdate && twoMonthsAgo) {
+      if (
+        !confirm(
+          "You can only update your location & signature once every 2 months!\nDo you want to update it now?"
+        )
+      ) {
+        return;
+      }
+    }
+
+    updateLocationAndSignature(event);
+  }
+
   /* -------------------------------------------------------------------*/
   // #region of TODO
   /* -------------------------------------------------------------------*/
@@ -118,53 +182,47 @@ function Profile() {
     navigate("/");
   }
 
-  const getUserFromDB = async () => {
+  const getUserFromDB = async (userID) => {
     let userSnapshot;
     try {
-      let userRef;
-      if (!user?.id) {
+      if (userID == null) {
         return;
       }
-      userRef = doc(db, "users", user.id);
 
-      try {
-        //try getting from cache first
-        userSnapshot = await getDocFromCache(userRef);
-        if (userSnapshot?.exists()) {
-          console.log("Using Cache");
-          setUser((prevestate) => ({
-            ...prevestate,
-            ...userSnapshot.data(),
-          }));
-          return setIsLoading(false);
-        }
-      } catch (error) {
-        console.log("Cache empty, Fetching from Network");
-        userRef = await doc(db, "users", user.id);
-        userSnapshot = await getDocFromServer(userRef);
-        setUser((prevestate) => ({
-          ...prevestate,
-          ...userSnapshot.data(),
-        }));
-        setIsLoading(false);
-      }
+      const userRef = doc(db, "users", userID);
+      console.log("Network call");
+      userSnapshot = await getDocFromServer(userRef);
+
+      //dummy snapshot to minimize db reads
+      // userSnapshot = {
+      //   data: () => ({
+      //     name: "Alfred Crayon",
+      //     location: "",
+      //     // profileLastUpdated: {
+      //     //   seconds: dateInSeconds(getDateXDaysFromNow(5)),
+      //     // },
+      //     profileLastUpdated: null,
+      //   }),
+      // };
+      setUser((prevestate) => ({
+        ...prevestate,
+        ...userSnapshot.data(),
+      }));
+      setIsLoading(false);
     } catch (error) {
-      console.error("error occurred:\n\n", error);
-      console.log({ user });
+      console.error("Network call failed", error);
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    let shouldSetUser = true;
     onAuthStateChanged(auth, (userFound) => {
       if (!userFound) {
         return;
       }
       // User is signed in.
 
-      // if (shouldSetUser) {
-      setUser((prevestate) => ({
+      setAuthInfo((prevestate) => ({
         ...prevestate,
         name: userFound.displayName,
         id: userFound.uid,
@@ -172,18 +230,14 @@ function Profile() {
         lastSignInTime: userFound.metadata.lastSignInTime,
         creationTime: userFound.metadata.creationTime,
       }));
-      // }
-
-      // return () => {
-      //   shouldSetUser = false;
-      // };
     }); //end of onAuthStateChanged
-  }, []);
+  }, [auth]);
 
   useEffect(() => {
-    getUserFromDB();
-  }, [user.id]);
-
+    if (authInfo.id) {
+      getUserFromDB(authInfo.id);
+    }
+  }, [authInfo.id]);
   return isLoading ? (
     <Spinner />
   ) : (
@@ -208,19 +262,19 @@ function Profile() {
               className="profile-info__update-text-btn"
               onClick={handleChangeClick}
             >
-              {changeDetails ? "Save" : "update"}
+              {changeDetails && user.name ? "Save" : "update"}
             </p>
           </div>
           <div className="profile-info__item">
             <BirthdayCake width="25px" height="25px" fill={"#e2e8f0"} />
             <p className="profile-info__text">
-              Member since : {timeAgo(user.creationTime)}
+              Member since : {timeAgo(authInfo.creationTime)}
             </p>
           </div>
           <div className="profile-info__item">
             <Clock width="25px" height="25px" fill={"#e2e8f0"} />
             <p className="profile-info__text">
-              Last seen : {timeAgo(user.lastSignInTime)}
+              Last seen : {timeAgo(authInfo.lastSignInTime)}
             </p>
           </div>
           <form className="profile-info__form" ref={formRef}>
@@ -264,7 +318,7 @@ function Profile() {
                   Signature:
                 </p>
 
-                {user.signature && !changeDetails ? (
+                {user?.signature && !changeDetails ? (
                   <p className="profile-info__text">{user.signature}</p>
                 ) : (
                   <div className="profile-info__signature-wrapper">
@@ -274,7 +328,7 @@ function Profile() {
                       title="signature style"
                       id="signature1"
                       name="signature"
-                      value={transformName(user?.name)}
+                      value={transformName(authInfo?.name)}
                       onChange={onChange}
                       required
                     />
@@ -283,7 +337,7 @@ function Profile() {
                       htmlFor="signatureShort"
                     >
                       {user?.name
-                        ? transformName(user?.name)
+                        ? transformName(authInfo?.name)
                         : transformName("John Doe") + "\n(example)"}
                     </label>
                     <input
@@ -292,7 +346,7 @@ function Profile() {
                       title="signature style"
                       name="signature"
                       id="signature2"
-                      value={getInitials(user?.name)}
+                      value={getInitials(authInfo?.name)}
                       onChange={onChange}
                       required
                     />
@@ -301,7 +355,7 @@ function Profile() {
                       htmlFor="signatureInitials"
                     >
                       {user?.name
-                        ? getInitials(user?.name)
+                        ? getInitials(authInfo?.name)
                         : getInitials("John Doe") + "(example)"}
                     </label>
                   </div>
