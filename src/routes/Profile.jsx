@@ -118,85 +118,71 @@ function Profile() {
     navigate("/");
   }
 
-   const getUserFromDB = useCallback(async () =>{
-      
-    console.info("getUserFromDB Running...");
+  const getUserFromDB = async () => {
+    let userSnapshot;
     try {
-      let userSnapshot;
       let userRef;
       if (!user?.id) {
-        console.log("no id")
         return;
       }
-      console.log();
       userRef = doc(db, "users", user.id);
 
-      //try getting from cache first
-      userSnapshot = await getDocFromCache(userRef);
-
-      console.log("userSnapshot", userSnapshot.data());
-      console.log("userSnapshot?.exists()", userSnapshot?.exists());
-
-      if (userSnapshot?.exists()) {
+      try {
+        //try getting from cache first
+        userSnapshot = await getDocFromCache(userRef);
+        if (userSnapshot?.exists()) {
+          console.log("Using Cache");
+          setUser((prevestate) => ({
+            ...prevestate,
+            ...userSnapshot.data(),
+          }));
+          return setIsLoading(false);
+        }
+      } catch (error) {
+        console.log("Cache empty, Fetching from Network");
+        userRef = await doc(db, "users", user.id);
+        userSnapshot = await getDocFromServer(userRef);
         setUser((prevestate) => ({
           ...prevestate,
           ...userSnapshot.data(),
         }));
-        return setIsLoading(false);
+        setIsLoading(false);
       }
-      // console.log("user id found");
-
-      // userRef = await doc(db, "users", user.id);
-      // userSnapshot = await getDocFromServer(userRef);
-      // setUser((prevestate) => ({
-      //   ...prevestate,
-      //   ...userSnapshot.data(),
-      // }));
-      setIsLoading(false);
     } catch (error) {
       console.error("error occurred:\n\n", error);
       console.log({ user });
       setIsLoading(false);
     }
-
-   },[] ); 
+  };
 
   useEffect(() => {
+    let shouldSetUser = true;
     onAuthStateChanged(auth, (userFound) => {
       if (!userFound) {
         return;
       }
       // User is signed in.
-      let shouldSetUser = true;
 
-      if (shouldSetUser) {
-        setUser((prevestate) => ({
-          ...prevestate,
-          name: userFound.displayName,
-          id: userFound.uid,
-          email: userFound.email,
-          lastSignInTime: userFound.metadata.lastSignInTime,
-          creationTime: userFound.metadata.creationTime,
-        }));
-      }
+      // if (shouldSetUser) {
+      setUser((prevestate) => ({
+        ...prevestate,
+        name: userFound.displayName,
+        id: userFound.uid,
+        email: userFound.email,
+        lastSignInTime: userFound.metadata.lastSignInTime,
+        creationTime: userFound.metadata.creationTime,
+      }));
+      // }
 
-      return () => {
-        shouldSetUser = false;
-      };
+      // return () => {
+      //   shouldSetUser = false;
+      // };
     }); //end of onAuthStateChanged
   }, []);
 
-   const isMounted = useRef(true);
-useEffect(() => {
-  if (isMounted.current) {
+  useEffect(() => {
     getUserFromDB();
-  }
-
-  return () => {
-    isMounted.current = false;
-  };
-}, [user.id]);
-
+  }, [user.id]);
 
   return isLoading ? (
     <Spinner />
