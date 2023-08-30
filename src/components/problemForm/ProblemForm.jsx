@@ -10,6 +10,7 @@ import logoURL from "img/NNLogoWhite.png";
 import { autosize } from "utils/autosizeTextArea.js";
 import { showCharLimit } from "utils/showCharLimit.js";
 import { subtleSecurity } from "src/utils/subtleSecurity.js";
+import { Header } from "./Header";
 
 function ProblemForm() {
   const initialState = {
@@ -24,7 +25,7 @@ function ProblemForm() {
   const problemSelection = useRef(null);
 
   function handleProblemText(event) {
-    autosize(event)
+    autosize(event);
     const contents = event.target.value;
     const input = event.target;
     setFormData((prevData) => ({
@@ -158,24 +159,7 @@ function ProblemForm() {
 
   return (
     <>
-      <header>
-        <div className="logo">
-          <img src={logoURL} alt="site logo" />
-        </div>
-        <h1>Neighbourhood Needs</h1>
-        <sup>[BETA]</sup>
-        <button
-          className="form-toggle"
-          onPointerDown={() =>
-            setFormData((prevData) => ({
-              ...prevData,
-              showForm: !prevData.showForm,
-            }))
-          }
-        >
-          {formData.showForm ? `Close` : `Report`}
-        </button>
-      </header>
+      <Header logoURL={logoURL} setFormData={setFormData} formData={formData} />
       <form
         action=""
         className={`problem-form ${

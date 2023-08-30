@@ -193,17 +193,7 @@ function Profile() {
       console.log("Network call");
       userSnapshot = await getDocFromServer(userRef);
 
-      //dummy snapshot to minimize db reads
-      // userSnapshot = {
-      //   data: () => ({
-      //     name: "Alfred Crayon",
-      //     location: "",
-      //     // profileLastUpdated: {
-      //     //   seconds: dateInSeconds(getDateXDaysFromNow(5)),
-      //     // },
-      //     profileLastUpdated: null,
-      //   }),
-      // };
+
       setUser((prevestate) => ({
         ...prevestate,
         ...userSnapshot.data(),
