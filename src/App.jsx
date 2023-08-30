@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import Footer from "components/Footer.jsx";
+import Footer from "src/components/footer/Footer.jsx";
 import PrivateRoute from "routes/PrivateRoute.jsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

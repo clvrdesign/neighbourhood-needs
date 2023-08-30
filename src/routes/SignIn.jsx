@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { toast } from "react-toastify";
-import OAuth from 'components/Oauth.jsx'
+import OAuth from "src/components/oAuth/OAuth.jsx";
 function SignIn() {
   const [formData, setFormData] = useState({
     email: "",

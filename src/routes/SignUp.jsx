@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import OAuth from "components/Oauth.jsx";
+import OAuth from "src/components/oAuth/OAuth.jsx";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -27,7 +27,6 @@ function SignUp() {
   const { name, email, password, location, signature } = formData;
   const navigate = useNavigate();
 
-
   function onChange(event) {
     setFormData((prevestate) => ({
       ...prevestate,
@@ -37,7 +36,7 @@ function SignUp() {
   function handleSignature(event) {
     setFormData((prevestate) => ({
       ...prevestate,
-        signature: event.target.value,
+      signature: event.target.value,
     }));
   }
 
@@ -141,7 +140,9 @@ function SignUp() {
         </div>
 
         <fieldset className="registration-form__fieldset">
-          <legend className="registration-form__legend">Select signature</legend>
+          <legend className="registration-form__legend">
+            Select signature
+          </legend>
           <input
             className="fieldset_input"
             type="radio"

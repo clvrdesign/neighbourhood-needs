@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import NeighbourhoodFilter from "components/NeighbourhoodFilter.jsx";
-import ProblemForm from "components/ProblemForm.jsx";
-import ProblemList from "components/ProblemList.jsx";
+import NeighbourhoodFilter from "src/components/neighbourhoodFilter/NeighbourhoodFilter.jsx";
+import ProblemForm from "src/components/problemForm/ProblemForm.jsx";
+import ProblemList from "src/components/problemList/ProblemList.jsx";
 import { generateGuestFingerprint } from "utils/generateGuestFingerprint.js";
 import { generateGuestId } from "utils/generateGuestId.js";
 import { collectUserData } from "utils/collectUserData.js";

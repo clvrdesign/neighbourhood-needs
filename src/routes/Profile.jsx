@@ -29,7 +29,7 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import { db } from "src/firebase.config.js";
-import Spinner from "components/Spinner.jsx";
+import Spinner from "src/components/spinner/Spinner.jsx";
 import { isMonthsAgo } from "src/utils/monthsAgo.js";
 import { getDateXDaysFromNow } from "src/utils/getDateXDaysFromNow.js";
 import { dateInSeconds } from "src/utils/dateInSeconds.js";
