@@ -1,38 +1,18 @@
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { ReactComponent as BirthdayCake } from "img/BirthdayCake.svg";
-import { ReactComponent as Clock } from "img/Clock.svg";
-import { ReactComponent as Location } from "img/Location.svg";
-import { ReactComponent as Signature } from "img/Signature.svg";
-import { timeAgo } from "utils/timeAgo.js";
-import { getBadge } from "utils/getBadge.js";
-import { transformName } from "src/utils/transformName.js";
-import { getInitials } from "src/utils/getInitials.js";
-import { sortedNeighbourhoods } from "src/utils/extractNeighbourhoods.js";
 import { toast } from "react-toastify";
 import { toastOptions } from "src/utils/toastOptions.js";
+import Header from "components/profile/Header.jsx";
 import {
-  collection,
   doc,
-  getDoc,
-  query,
-  where,
-  orderBy,
-  limit,
-  getCountFromServer,
-  getDocFromCache,
-  startAfter,
   getDocFromServer,
-  Timestamp,
   updateDoc,
   serverTimestamp,
 } from "firebase/firestore";
 import { db } from "src/firebase.config.js";
 import Spinner from "src/components/spinner/Spinner.jsx";
 import { isMonthsAgo } from "src/utils/monthsAgo.js";
-import { getDateXDaysFromNow } from "src/utils/getDateXDaysFromNow.js";
-import { dateInSeconds } from "src/utils/dateInSeconds.js";
 
 function Profile() {
   const [user, setUser] = useState({
@@ -56,19 +36,17 @@ function Profile() {
   let locationSelect;
   let SingleInitialInput;
   let fDoubleInitialInput;
-  if (formRef.current != null) {
-    locationSelect = formRef.current[1];
-    SingleInitialInput = formRef.current[2];
-    fDoubleInitialInput = formRef.current[3];
-  }
+    locationSelect = formRef.current?.[1];
+    SingleInitialInput = formRef.current?.[2];
+    fDoubleInitialInput = formRef.current?.[3];
 
   function onChange(event) {
     setUser((prevestate) => ({
       ...prevestate,
       [event.target.name]: event.target.value,
     }));
-    locationSelect.setCustomValidity("");
-    SingleInitialInput.setCustomValidity("");
+    locationSelect?.setCustomValidity("");
+    SingleInitialInput?.setCustomValidity("");
   }
   async function handleSubmit(event) {
     try {
@@ -92,14 +70,11 @@ function Profile() {
         setChangeDetails(true);
         const updatedUser = {
           ...user,
+          id: authInfo.id,
           lastModified: serverTimestamp(),
           profileLastUpdated: serverTimestamp(),
         };
-        // const updatedUser = {
-        //   ...user,
-        //   profileLastUpdated: Timestamp.fromDate(new Date()), // mock for testing
-        //   lastModified: Timestamp.fromDate(new Date()), // mock for testing
-        // };
+
         //save to DB
         setUser(updatedUser);
         updateDoc(userRef, updatedUser);
@@ -120,8 +95,13 @@ function Profile() {
     setChangeDetails((prevestate) => !prevestate);
   }
   function handleChangeClick(event) {
+    const IN_MILLISECONDS = 1000;
+    const MONTHS = 2;
     const { profileLastUpdated } = user;
-    const twoMonthsAgo = isMonthsAgo(new Date(profileLastUpdated?.seconds), 2);
+    const twoMonthsAgo = isMonthsAgo(
+      new Date(profileLastUpdated?.seconds * IN_MILLISECONDS),
+      MONTHS
+    );
     const isfirstUpdate = profileLastUpdated == null;
 
     if (!isfirstUpdate && !twoMonthsAgo) {
@@ -193,7 +173,6 @@ function Profile() {
       console.log("Network call");
       userSnapshot = await getDocFromServer(userRef);
 
-
       setUser((prevestate) => ({
         ...prevestate,
         ...userSnapshot.data(),
@@ -232,133 +211,15 @@ function Profile() {
     <Spinner />
   ) : (
     <div className="profile-container">
-      <header>
-        <div className="badge-wrapper">
-          <div className="badge-wrapper__latest-badge" title="Rank">
-            <img
-              src={getBadge(user?.rank || 1)?.path}
-              alt="latest badge"
-              className="badge-wrapper__img"
-            />
-          </div>
-          <p className="badge-wrapper__rank-name">
-            {getBadge(user?.rank || 1)?.name}
-          </p>
-        </div>
-        <div className="profile-info">
-          <div className="profile-info__heading-wrapper">
-            <h1 className="profile-info__heading">{user?.name}</h1>
-            <p
-              className="profile-info__update-text-btn"
-              onClick={handleChangeClick}
-            >
-              {changeDetails && user.name ? "Save" : "update"}
-            </p>
-          </div>
-          <div className="profile-info__item">
-            <BirthdayCake width="25px" height="25px" fill={"#e2e8f0"} />
-            <p className="profile-info__text">
-              Member since : {timeAgo(authInfo.creationTime)}
-            </p>
-          </div>
-          <div className="profile-info__item">
-            <Clock width="25px" height="25px" fill={"#e2e8f0"} />
-            <p className="profile-info__text">
-              Last seen : {timeAgo(authInfo.lastSignInTime)}
-            </p>
-          </div>
-          <form className="profile-info__form" ref={formRef}>
-            <fieldset
-              className={`profile-info__fieldset${
-                changeDetails ? " profile-info__fieldset--show-border" : ""
-              }`}
-            >
-              <legend className="profile-info__legend ">
-                {changeDetails ? "Update In Progress" : null}
-              </legend>
-              <div className="profile-info__item">
-                <Location width="25px" height="25px" fill={"#e2e8f0"} />
-
-                <select
-                  className="profile-info__select"
-                  value={user.location}
-                  id="location"
-                  name="location"
-                  onChange={onChange}
-                  disabled={!changeDetails}
-                  required
-                >
-                  <option className="profile-info__text" value="">
-                    Where are you from?
-                  </option>
-                  {sortedNeighbourhoods.map((aNeighbourhood) => (
-                    <option
-                      key={aNeighbourhood}
-                      value={aNeighbourhood}
-                      className="profile-info__text"
-                    >
-                      {aNeighbourhood}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="profile-info__item">
-                <Signature width="25px" height="25px" fill={"#e2e8f0"} />
-                <p className="profile-info__text profile-info__text--keep-all">
-                  Signature:
-                </p>
-
-                {user?.signature && !changeDetails ? (
-                  <p className="profile-info__text">{user.signature}</p>
-                ) : (
-                  <div className="profile-info__signature-wrapper">
-                    <input
-                      className="fieldset_input"
-                      type="radio"
-                      title="signature style"
-                      id="signature1"
-                      name="signature"
-                      value={transformName(authInfo?.name)}
-                      onChange={onChange}
-                      required
-                    />
-                    <label
-                      className="profile-info__label"
-                      htmlFor="signatureShort"
-                    >
-                      {user?.name
-                        ? transformName(authInfo?.name)
-                        : transformName("John Doe") + "\n(example)"}
-                    </label>
-                    <input
-                      className="fieldset_input"
-                      type="radio"
-                      title="signature style"
-                      name="signature"
-                      id="signature2"
-                      value={getInitials(authInfo?.name)}
-                      onChange={onChange}
-                      required
-                    />
-                    <label
-                      className="profile-info__label"
-                      htmlFor="signatureInitials"
-                    >
-                      {user?.name
-                        ? getInitials(authInfo?.name)
-                        : getInitials("John Doe") + "(example)"}
-                    </label>
-                  </div>
-                )}
-              </div>
-            </fieldset>
-          </form>
-        </div>
-
-        <button className="logout" onPointerDown={onLogout}>
-          Log Out
-        </button>
-      </header>
+      <Header
+        user={user}
+        handleChangeClick={handleChangeClick}
+        changeDetails={changeDetails}
+        formRef={formRef}
+        onChange={onChange}
+        authInfo={authInfo}
+        onLogout={onLogout}
+      />
       <section></section>
     </div>
   );

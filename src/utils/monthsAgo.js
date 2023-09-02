@@ -2,10 +2,9 @@ export function isMonthsAgo(targetDateToCheck, monthsAgo) {
   const currentDate = new Date();
   const referenceDate = new Date(currentDate);
   referenceDate.setMonth(currentDate.getMonth() - monthsAgo);
-
   return (
     targetDateToCheck.getFullYear() === referenceDate.getFullYear() &&
-    targetDateToCheck.getMonth() === referenceDate.getMonth()
+    targetDateToCheck.getMonth() <= referenceDate.getMonth()
   );
 }
 

@@ -19,8 +19,8 @@ function NeighbourhoodFilter() {
                 All Neighbourhoods
             </summary>
             <ul className="neighbourhood-list">
-              {sortedNeighbourhoods.map((aNeighbourhood) =>(
-                <li key={aNeighbourhood}><button>{aNeighbourhood.toUpperCase()}</button></li>
+              {sortedNeighbourhoods.map((neighbourhood) =>(
+                <li key={neighbourhood}><button>{neighbourhood.toUpperCase()}</button></li>
               )) }
 
             </ul>
