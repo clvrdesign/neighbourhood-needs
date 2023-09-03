@@ -36,9 +36,9 @@ function Profile() {
   let locationSelect;
   let SingleInitialInput;
   let fDoubleInitialInput;
-    locationSelect = formRef.current?.[1];
-    SingleInitialInput = formRef.current?.[2];
-    fDoubleInitialInput = formRef.current?.[3];
+  locationSelect = formRef.current?.[1];
+  SingleInitialInput = formRef.current?.[2];
+  fDoubleInitialInput = formRef.current?.[3];
 
   function onChange(event) {
     setUser((prevestate) => ({
@@ -199,6 +199,15 @@ function Profile() {
         lastSignInTime: userFound.metadata.lastSignInTime,
         creationTime: userFound.metadata.creationTime,
       }));
+      return () => {
+        setAuthInfo({
+          name: "",
+          id: "",
+          email: "",
+          lastSignInTime: "",
+          creationTime: "",
+        });
+      };
     }); //end of onAuthStateChanged
   }, [auth]);
 
