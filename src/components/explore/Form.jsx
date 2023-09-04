@@ -77,6 +77,7 @@ export function Form({ formData, setFormData }) {
       if (!formData.isValidated) {
         return;
       }
+      //if user is in localStorage
 
       // Rest of the post object creation code
       const post = {

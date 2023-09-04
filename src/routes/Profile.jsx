@@ -15,6 +15,20 @@ import Spinner from "src/components/spinner/Spinner.jsx";
 import { isMonthsAgo } from "src/utils/monthsAgo.js";
 import { subtleSecurity } from "src/utils/subtleSecurity.js";
 
+//rfp
+document.addEventListener("DOMContentLoaded", function (event) {
+  console.log("content loaded");
+  const auth = getAuth();
+  onAuthStateChanged(auth, (userFound) => {
+    if (!userFound) {
+      console.log("user not found", userFound);
+      return;
+    }
+
+    console.log("userfound", userFound);
+  });
+});
+
 function Profile() {
   const [user, setUser] = useState({
     location: "",
@@ -130,11 +144,11 @@ function Profile() {
   /**
     # TODO:[x]-completed [A]-priority-letter
   
-    1. [] [] fetch user from database
+    1. [] [x] fetch user from database
   
-    2. [x] [] provide form for signature and location to be updated
+    2. [x] [x] provide form for signature and location to be updated
   
-    3. [] [] update last modified field, if less than 2 months prevent update and notify user
+    3. [] [x] update last modified field, if less than 2 months prevent update and notify user
   
     4. [] [] cache user data and only read from db ifcache if last update was 
   
@@ -158,7 +172,8 @@ function Profile() {
   /* -------------------------------------------------------------------*/
   // #endregion of TODO
 
-  function onLogout() {
+  async function onLogout() {
+    localStorage.clear();
     auth.signOut();
     navigate("/");
   }
