@@ -15,13 +15,16 @@ export async function generateGuestFingerprint() {
 
   if (!userRFP) {
     userRFP = currentFingerprint;
-    subtleSecurity.constructor("setLocalStorage")("NNRFP", userRFP);
+    await subtleSecurity.constructor("setLocalStorage")("NNRFP", userRFP);
   }
 
   //check if user changed values manually and override the changes
 
   if (!(userRFP === currentFingerprint)) {
-    subtleSecurity.constructor("setLocalStorage")("NNRFP", currentFingerprint);
+    await subtleSecurity.constructor("setLocalStorage")(
+      "NNRFP",
+      currentFingerprint
+    );
   }
   return currentFingerprint;
 }

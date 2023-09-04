@@ -13,6 +13,7 @@ import {
 import { db } from "src/firebase.config.js";
 import Spinner from "src/components/spinner/Spinner.jsx";
 import { isMonthsAgo } from "src/utils/monthsAgo.js";
+import { subtleSecurity } from "src/utils/subtleSecurity.js";
 
 function Profile() {
   const [user, setUser] = useState({
@@ -173,10 +174,18 @@ function Profile() {
       console.log("Network call");
       userSnapshot = await getDocFromServer(userRef);
 
-      setUser((prevestate) => ({
+      await setUser((prevestate) => ({
         ...prevestate,
         ...userSnapshot.data(),
       }));
+      //add user to local storage,
+      //use the user's key and not a default one
+      await subtleSecurity.constructor("importKey")(userSnapshot.data().key);
+      await subtleSecurity.constructor("setLocalStorage")(
+        "NNUSER",
+        userSnapshot.data()
+      );
+
       setIsLoading(false);
     } catch (error) {
       console.error("Network call failed", error);

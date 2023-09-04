@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
-export function Header({ logoURL, setFormData, formData }) {
+import logoURL from "img/NNLogoWhite.png";
+export function Header({  setFormData, formData }) {
   return (
     <header>
       <div className="logo">

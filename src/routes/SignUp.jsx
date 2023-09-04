@@ -51,7 +51,7 @@ function SignUp() {
       );
       const { user } = userCredential;
       await updateProfile(auth.currentUser, { displayName: name });
-      // build user object for db injection
+      // build user object for db insertion
       const formDataCopy = { ...formData };
       delete formDataCopy.password;
       formDataCopy.dateRegistered = serverTimestamp();
@@ -70,7 +70,7 @@ function SignUp() {
       //for local storage encryption
       formDataCopy.key = await subtleSecurity.constructor("rotateKey")();
       await setDoc(doc(db, "users", user.uid), formDataCopy);
-      navigate("/");
+      navigate("/profile");
       toast.success("Registration Successful", toastOptions);
     } catch (error) {
       console.log(error);
