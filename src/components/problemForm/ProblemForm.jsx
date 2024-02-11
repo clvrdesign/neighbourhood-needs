@@ -14,12 +14,12 @@ function ProblemForm() {
   const initialState = {
     message: "",
     selected: "",
-    isValidated: false,
     showForm: false,
   };
 
   const [formData, setFormData] = useState(initialState);
   const problemText = useRef(null);
+  const isValidated = useRef(false);
   const locationSelection = useRef(null);
 
   function handleProblemText(event) {
@@ -34,16 +34,16 @@ function ProblemForm() {
     if (contents.trim()?.length === 0) {
       setFormData((prevData) => ({
         ...prevData,
-        isValidated: false,
       }));
+      isValidated.current = false;
       return input.setCustomValidity("You must state your problem first.");
     }
 
     if (contents.trim()?.length < 10) {
       setFormData((prevData) => ({
         ...prevData,
-        isValidated: false,
       }));
+      isValidated.current = false;
       return input.setCustomValidity(
         `Please lengthen this text to 10 characters or more (you're currently using ${contents.length} characters).`
       );
@@ -63,8 +63,8 @@ function ProblemForm() {
     if (contents.length === 0) {
       setFormData((prevData) => ({
         ...prevData,
-        isValidated: false,
       }));
+      isValidated.current = false;
       return selection.setCustomValidity("You must choose a location.");
     }
 
@@ -113,11 +113,11 @@ function ProblemForm() {
       if (invalidSubmission.condition) {
         setFormData((prevData) => ({
           ...prevData,
-          isValidated: false,
         }));
         invalidSubmission.inputElement.setCustomValidity(
           invalidSubmission.errorMessage
         );
+        isValidated.current = false;
         return invalidSubmission.inputElement.reportValidity();
       }
     }
@@ -126,11 +126,12 @@ function ProblemForm() {
     locationSelection.current.setCustomValidity("");
     setFormData((prevData) => ({
       ...prevData,
-      isValidated: true,
     }));
-
+    isValidated.current = true;
+    console.log("form data :", formData);
     try {
-      if (!formData.isValidated) {
+      //do not submit if form is invalid
+      if (!isValidated.current) {
         return;
       }
 
