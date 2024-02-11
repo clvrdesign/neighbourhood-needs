@@ -1,19 +1,13 @@
 import { useState } from "react";
 import { subtleSecurity } from "utils/subtleSecurity.js";
 
-
+// simulate user auth and assigned a key
+// const USER_KEY = "acaRroIrqyP0iL_Kuja3v6Qkb8lE_gT4XxI6f4x86L8";
 await subtleSecurity.constructor("importKey")();
 function useSecureLocalStorage(key, initialValue) {
   const [currentLocalStorage, setCurrentLocalStorage] = useState(() =>
     getLocalStorage(key, initialValue)
   );
-
-    async function getLocalStorage(key, initialValue) {
-    const itemFromStorage = await subtleSecurity.constructor("getLocalStorage")(
-      key
-    );
-    return itemFromStorage ? itemFromStorage : initialValue;
-  }
 
   const EncryptLocalStorage = async (value) => {
     // Check if function
@@ -27,5 +21,10 @@ function useSecureLocalStorage(key, initialValue) {
 
   return [currentLocalStorage, EncryptLocalStorage];
 }
-
+async function getLocalStorage(key, initialValue) {
+  const itemFromStorage = await subtleSecurity.constructor("getLocalStorage")(
+    key
+  );
+  return itemFromStorage ? itemFromStorage : initialValue;
+}
 export { useSecureLocalStorage };
