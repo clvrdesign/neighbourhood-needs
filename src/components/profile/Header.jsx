@@ -9,9 +9,6 @@ import { getInitials } from "src/utils/getInitials.js";
 import { timeAgo } from "src/utils/timeAgo.js";
 import { transformName } from "src/utils/transformName.js";
 
-document.addEventListener("DOMContentLoaded", function (event) {
-  console.log("DOM fully loaded and parsed");
-});
 function Header({
   user,
   handleChangeClick,
@@ -164,10 +161,10 @@ Header.propTypes = {
   onChange: PropTypes.func,
   onLogout: PropTypes.func,
   user: PropTypes.shape({
-    location: PropTypes.string,
-    name: PropTypes.string,
+    location: PropTypes.any,
+    name: PropTypes.any,
     rank: PropTypes.number,
-    signature: PropTypes.string
+    signature: PropTypes.any
   })
 }
 export default Header;
