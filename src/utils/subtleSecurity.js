@@ -1,14 +1,14 @@
 /**
- * Provides very lite security for local storage
- * not intended for important data only to obfuscate
- * data in local storage.
+ * Provide very lite security for local storage
+ * not intended for important data
  *
  * @function subtleSecurity
- * @param  {type} function Security IIFE that create subtleSecurity object
- * @return {Object} subtleSecurity object
+ * @param  {type} function Security( {description}
+ * @return {type} {description}
  */
 
 const security = (function () {
+  // const cache = {feather:"fly"};
   let cipher;
   let iv;
   const DEFAULT_KEY = "acaRroIrqyP0iL_Kuja3v6Qkb8lE_gT4XxI6f4x86L8";
@@ -28,7 +28,6 @@ const security = (function () {
       true,
       ["encrypt", "decrypt"]
     );
-
     return cache.yourKey;
   }
   async function exportKey() {
@@ -128,10 +127,10 @@ const security = (function () {
 
   async function setLocalStorage(identifier, data) {
     // Encrypt message
-    await encrypt(JSON.stringify(data));
+    await encrypt(data);
 
     // Pack and transmit
-    await localStorage.setItem(
+    localStorage.setItem(
       identifier,
       JSON.stringify({
         0: pack(cipher),
@@ -152,10 +151,10 @@ const security = (function () {
         key,
         unpack(encryptedData[1])
       );
-      return JSON.parse(decryptedData);
+      return decryptedData;
     } catch (error) {
       console.error(
-        "Decryption Error, most likely key not generated\nor key mismatched\nor storage identifier not submitted"
+        "Decryption Error, most likely key not generated or unmatched"
       );
     }
   }

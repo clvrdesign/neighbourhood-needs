@@ -39,7 +39,7 @@ function SignIn() {
       );
 
       if (userCredential.user) {
-        navigate("/profile");
+        navigate("/");
         toast.success(
           `Welcome ${userCredential.user.displayName}`,
           toastOptions

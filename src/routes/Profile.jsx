@@ -1,33 +1,39 @@
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { ReactComponent as BirthdayCake } from "img/BirthdayCake.svg";
+import { ReactComponent as Clock } from "img/Clock.svg";
+import { ReactComponent as Location } from "img/Location.svg";
+import { ReactComponent as Signature } from "img/Signature.svg";
+import { timeAgo } from "utils/timeAgo.js";
+import { getBadge } from "utils/getBadge.js";
+import { transformName } from "src/utils/transformName.js";
+import { getInitials } from "src/utils/getInitials.js";
+import { sortedNeighbourhoods } from "src/utils/extractNeighbourhoods.js";
 import { toast } from "react-toastify";
 import { toastOptions } from "src/utils/toastOptions.js";
-import Header from "components/profile/Header.jsx";
+import Header from 'components/profile/Header.jsx'
 import {
+  collection,
   doc,
+  getDoc,
+  query,
+  where,
+  orderBy,
+  limit,
+  getCountFromServer,
+  getDocFromCache,
+  startAfter,
   getDocFromServer,
+  Timestamp,
   updateDoc,
   serverTimestamp,
 } from "firebase/firestore";
 import { db } from "src/firebase.config.js";
 import Spinner from "src/components/spinner/Spinner.jsx";
 import { isMonthsAgo } from "src/utils/monthsAgo.js";
-import { subtleSecurity } from "src/utils/subtleSecurity.js";
-
-//rfp
-document.addEventListener("DOMContentLoaded", function (event) {
-  console.log("content loaded");
-  const auth = getAuth();
-  onAuthStateChanged(auth, (userFound) => {
-    if (!userFound) {
-      console.log("user not found", userFound);
-      return;
-    }
-
-    console.log("userfound", userFound);
-  });
-});
+import { getDateXDaysFromNow } from "src/utils/getDateXDaysFromNow.js";
+import { dateInSeconds } from "src/utils/dateInSeconds.js";
 
 function Profile() {
   const [user, setUser] = useState({
@@ -51,9 +57,11 @@ function Profile() {
   let locationSelect;
   let SingleInitialInput;
   let fDoubleInitialInput;
-  locationSelect = formRef.current?.[1];
-  SingleInitialInput = formRef.current?.[2];
-  fDoubleInitialInput = formRef.current?.[3];
+  if (formRef.current != null) {
+    locationSelect = formRef.current[1];
+    SingleInitialInput = formRef.current[2];
+    fDoubleInitialInput = formRef.current[3];
+  }
 
   function onChange(event) {
     setUser((prevestate) => ({
@@ -144,11 +152,11 @@ function Profile() {
   /**
     # TODO:[x]-completed [A]-priority-letter
   
-    1. [] [x] fetch user from database
+    1. [] [] fetch user from database
   
-    2. [x] [x] provide form for signature and location to be updated
+    2. [x] [] provide form for signature and location to be updated
   
-    3. [] [x] update last modified field, if less than 2 months prevent update and notify user
+    3. [] [] update last modified field, if less than 2 months prevent update and notify user
   
     4. [] [] cache user data and only read from db ifcache if last update was 
   
@@ -172,8 +180,7 @@ function Profile() {
   /* -------------------------------------------------------------------*/
   // #endregion of TODO
 
-  async function onLogout() {
-    localStorage.clear();
+  function onLogout() {
     auth.signOut();
     navigate("/");
   }
@@ -189,18 +196,10 @@ function Profile() {
       console.log("Network call");
       userSnapshot = await getDocFromServer(userRef);
 
-      await setUser((prevestate) => ({
+      setUser((prevestate) => ({
         ...prevestate,
         ...userSnapshot.data(),
       }));
-      //add user to local storage,
-      //use the user's key and not a default one
-      await subtleSecurity.constructor("importKey")(userSnapshot.data().key);
-      await subtleSecurity.constructor("setLocalStorage")(
-        "NNUSER",
-        userSnapshot.data()
-      );
-
       setIsLoading(false);
     } catch (error) {
       console.error("Network call failed", error);
@@ -223,15 +222,6 @@ function Profile() {
         lastSignInTime: userFound.metadata.lastSignInTime,
         creationTime: userFound.metadata.creationTime,
       }));
-      return () => {
-        setAuthInfo({
-          name: "",
-          id: "",
-          email: "",
-          lastSignInTime: "",
-          creationTime: "",
-        });
-      };
     }); //end of onAuthStateChanged
   }, [auth]);
 
@@ -246,6 +236,15 @@ function Profile() {
     <div className="profile-container">
       <Header
         user={user}
+        // getBadge={getBadge}
+        // rank={rank}
+        // path={path}
+        // name={name}
+        // aNeighbourhood={aNeighbourhood}
+        // signature={signature}
+        // timeAgo={timeAgo}
+        // transformName={transformName}
+        // getInitials={getInitials}
         handleChangeClick={handleChangeClick}
         changeDetails={changeDetails}
         formRef={formRef}
