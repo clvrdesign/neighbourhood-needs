@@ -1,21 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NeighbourhoodFilter from "src/components/neighbourhoodFilter/NeighbourhoodFilter.jsx";
-import ProblemList from "src/components/explore/ProblemList.jsx";
-import { Form } from "components/explore/Form.jsx";
-import { getAuth,onAuthStateChanged } from "firebase/auth";
-import { Header } from "components/explore/Header.jsx";
-
-
+import ProblemForm from "src/components/problemForm/ProblemForm.jsx";
+import ProblemList from "src/components/problemList/ProblemList.jsx";
+import { generateGuestFingerprint } from "utils/generateGuestFingerprint.js";
+import { generateGuestId } from "utils/generateGuestId.js";
+import { collectUserData } from "utils/collectUserData.js";
+import { handlePromise } from "utils/handlePromise.js";
 function Explore() {
-  const initialState = {
-    problem: "",
-    location: "",
-    isValidated: false,
-    showForm: false,
-  };
- 
-  const [formData, setFormData] = useState(initialState);
-
   // const [userData, setUserData] = useState({});
 
   // useEffect(() => {
@@ -34,8 +25,7 @@ function Explore() {
   return (
     <>
       <div className="container">
-        <Header setFormData={setFormData} formData={formData} />
-        <Form formData={formData} setFormData={setFormData} />
+        <ProblemForm />
         <main>
           <NeighbourhoodFilter />
           <ProblemList />
